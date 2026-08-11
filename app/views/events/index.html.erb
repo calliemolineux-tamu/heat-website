@@ -1,61 +1,37 @@
-<main class="container-full">
-  <header class="header">
+<main class="container-full" data-controller="modal">
+  <header class="header events-header">
     <h1>EVENTS</h1>
+    <% create_link = create_link_for(@role) %>
+    <%= link_to create_link[:name], create_link[:path], class: create_link[:class],
+                 data: { turbo_frame: dom_id(Event.new), action: 'click->modal#open' } if create_link.present? %>
   </header>
-  <div class="events"> 
-    <div class="calendar-container">
-      <div class="events__links">
-        <% create_link = create_link_for(@role) %>
-        <% if create_link.present? %>
-          <%= link_to create_link[:name], create_link[:path], class: create_link[:class] %>
-          <%= link_to 'View Archived Events', archived_events_path, class: 'btn btn--secondary' %>
-        <% end %>
-      </div>
-      <div>
-        <div class="calendar">
-          <%= month_calendar events: @events do |date, events| %>
-            <div class="day">
-              <% if events.any? %>
-                <%= link_to date.day, event_path(events.first), class: 'event-date' %>
-              <% else %>
-                <span class="no-event"><%= date.day %></span>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-      </div>
+
+  <div class="events" data-controller="event-tile-height">
+    <div class="calendar-container" data-event-tile-height-target="calendar">
+      <%= render 'events/month_calendar_panel', events: @events %>
     </div>
-    <div class="event__container">
-        <div class="event__sort navbar-sub">
-          <div class="event__sort-label"><h3>Sort by:</h3></div>
-          <div class="event__sort-options">
-            <%= sortable 'start_time', 'Date', class: 'event__sort-option' %>
-            <%= sortable 'name', 'Name', class: 'event__sort-option' %>
-            <%= sortable 'location', 'Location', class: 'event__sort-option' %>
-          </div>
-        </div>
-        <% @events.each do |event| %>
-          <div class="event">
-            <h3><%= link_to event.name, event_path(event) %></h3>
-            <p><%= event.location %></p>
-            <p><%= event.start_time.strftime("%B %d, %Y") %></p>
-            <p>
-              <% if event.start_time.strftime("%p") == event.end_time.strftime("%p") %>
-                <%= event.start_time.strftime("%l:%M") %> - <%= event.end_time.strftime("%l:%M %p") %>
-              <% else %>
-                <%= event.start_time.strftime("%l:%M %p") %> - <%= event.end_time.strftime("%l:%M %p") %>
-              <% end %>
-            </p>
-            <hr>
-            <% action_links = action_links_for(event, @role) %>
-            <div class="event__links">
-              <% action_links.each do |link| %>
-                <%= link_to link[:name], link[:path], link.except(:name, :path) %>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
+
+    <div class="event__container" id="event_container" data-event-tile-height-target="tile">
+      <h2 class="event__container-title">Upcoming Events</h2>
+
+      <div id="event_list">
+        <%= render 'events/event_list', events: @events %>
       </div>
     </div>
   </div>
+
+  <div id="day-events-modal" class="modal" data-controller="day-events" data-day-events-target="dialog"
+       data-action="click->day-events#closeBackground">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 data-day-events-target="title"></h3>
+        <button type="button" class="modal-close" data-action="click->day-events#close" aria-label="Close">&times;</button>
+      </div>
+      <div data-day-events-target="body"></div>
+    </div>
+  </div>
+
+  <% if @role == 'admin' %>
+    <%= render 'events/event_modal' %>
+  <% end %>
 </main>

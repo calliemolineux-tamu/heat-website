@@ -1,6 +1,5 @@
 <main class="container">
-    <h1>New Event</h1>
-    <%= render 'form' %>
-    <%= link_to 'Back to Events', events_path %>
+  <%= turbo_frame_tag dom_id(Event.new) do %>
+    <%= render 'new_event_content' %>
+  <% end %>
 </main>
-

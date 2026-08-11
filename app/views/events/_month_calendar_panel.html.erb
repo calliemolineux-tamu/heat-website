@@ -1,0 +1,7 @@
+<%# The month grid itself, factored out so it can be re-rendered in place (via Turbo Stream)
+    after an inline event is created from the calendar, without reloading the whole page. %>
+<div class="calendar" id="calendar">
+  <%= month_calendar events: events do |date, day_events| %>
+    <%= render 'events/calendar_day', date:, events: day_events %>
+  <% end %>
+</div>

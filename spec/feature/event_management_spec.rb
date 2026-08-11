@@ -28,8 +28,6 @@ RSpec.feature 'Event Management', type: :feature do
 
     scenario 'displays existing events' do
       expect(page).to have_content('Test Event')
-      click_on 'Name'
-      click_on 'Name'
     end
 
     scenario 'create a new event with valid data' do
@@ -51,19 +49,6 @@ RSpec.feature 'Event Management', type: :feature do
       expect_event_update_success('Updated Event')
     end
 
-    scenario 'archive an event' do
-      visit event_path(event)
-      click_on 'Archive'
-      expect_event_archived
-    end
-
-    scenario 'unarchive an event from the archived events page' do
-      event.update(archived: true)
-      visit archived_events_path
-      click_on 'Unarchive'
-      expect_event_unarchived('Test Event')
-    end
-
     scenario 'delete an event', :js do
       visit event_path(event)
       accept_confirm do
@@ -74,79 +59,37 @@ RSpec.feature 'Event Management', type: :feature do
   end
 
   # Helper methods
+
+  # "Create New Event" now opens the quick-add form inline (in a modal on the events
+  # index, via a Turbo Frame) instead of navigating to a separate page, and the
+  # start/end time fields are a single flatpickr-enhanced text input rather than
+  # Rails' multi-select datetime_select widgets.
   def create_event(name, start_time, end_time, location, description)
     fill_in 'Name', with: name
-    select_datetime(DateTime.parse(start_time), from: 'event_start_time', ampm: true, include_date: true)
-    select_datetime(DateTime.parse(end_time), from: 'event_end_time', ampm: true, include_date: true)
+    fill_in_datetime('event_start_time', start_time)
+    fill_in_datetime('event_end_time', end_time)
     fill_in 'Location', with: location
     fill_in 'Description', with: description
     click_button 'Submit'
   end
 
-  def select_datetime(datetime, options = {})
-    field = options[:from]
-    ampm = options[:ampm]
-    include_date = options.fetch(:include_date, true)
-    prefix = field.downcase.gsub(' ', '_')
-
-    within("##{prefix}") do
-      select_date(datetime, prefix, include_date)
-      select_time(datetime, prefix, ampm)
-    end
-  rescue StandardError => e
-    Rails.logger.error("Error selecting datetime: #{e.message}")
-  end
-
-  def select_date(datetime, prefix, include_date)
-    return unless include_date
-
-    select_year(datetime.year, from: "#{prefix}_1i")
-    select_month(datetime.month, from: "#{prefix}_2i")
-    select_day(datetime.day, from: "#{prefix}_3i")
-  end
-
-  def select_year(year, from:)
-    select year.to_s, from:
-  end
-
-  def select_month(month, from:)
-    select Date::MONTHNAMES[month], from:
-  end
-
-  def select_day(day, from:)
-    select day.to_s.rjust(2, '0'), from:
-  end
-
-  def select_time(datetime, prefix, ampm)
-    hour = calculate_hour(datetime.hour, ampm)
-    minute = datetime.min.to_s.rjust(2, '0')
-    period = ampm ? determine_period(datetime.hour) : nil
-
-    select_hour(prefix, hour)
-    select_minute(prefix, minute)
-    select_period(prefix, period) if ampm && has_selector?("select##{prefix}_6i")
-  end
-
-  def calculate_hour(hour, ampm)
-    return 12 if ampm && (hour % 12).zero?
-
-    ampm ? (hour % 12) : hour
-  end
-
-  def determine_period(hour)
-    hour < 12 ? 'AM' : 'PM'
-  end
-
-  def select_hour(prefix, hour)
-    select hour.to_s.rjust(2, '0'), from: "#{prefix}_4i"
-  end
-
-  def select_minute(prefix, minute)
-    select minute, from: "#{prefix}_5i"
-  end
-
-  def select_period(prefix, period)
-    select period, from: "#{prefix}_6i"
+  # Sets a flatpickr-enhanced field's value via flatpickr's own JS API rather than
+  # driving the calendar popup through the UI, which is the standard reliable way
+  # to fill these fields in a Capybara/Selenium test.
+  def fill_in_datetime(field_id, value)
+    formatted = DateTime.parse(value).strftime('%Y-%m-%d %H:%M')
+    page.execute_script(<<~JS)
+      (function() {
+        var el = document.getElementById('#{field_id}');
+        if (el && el._flatpickr) {
+          el._flatpickr.setDate('#{formatted}', true);
+        } else if (el) {
+          el.value = '#{formatted}';
+          el.dispatchEvent(new Event('input'));
+          el.dispatchEvent(new Event('change'));
+        }
+      })();
+    JS
   end
 
   def update_event(name, location, description)
@@ -157,9 +100,11 @@ RSpec.feature 'Event Management', type: :feature do
     click_button 'Submit'
   end
 
+  # Successful creation now stays on the events index (created inline via Turbo
+  # Stream) instead of redirecting to the new event's show page.
   def expect_event_creation_success(event_name)
-    expect(page).to have_content('Event was successfully created.')
-    expect(page).to have_content(event_name.upcase)
+    expect(page).to have_content('Event created')
+    expect(page).to have_content(event_name)
   end
 
   def expect_blank_event_name_error
@@ -168,16 +113,6 @@ RSpec.feature 'Event Management', type: :feature do
 
   def expect_event_update_success(event_name)
     expect(page).to have_content(event_name.upcase)
-  end
-
-  def expect_event_archived
-    expect(page).to have_content('Event was successfully archived.')
-    # Add more specific expectations if needed
-  end
-
-  def expect_event_unarchived(event_name)
-    expect(page).to have_content(event_name)
-    expect(page).to have_content('Event was successfully unarchived and restored to the main list.')
   end
 
   def expect_event_deletion_success(event_name)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_24_231443) do
+ActiveRecord::Schema[7.0].define(version: 2026_08_06_000003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,12 +43,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_24_231443) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.string "location"
-    t.boolean "archived", default: false, null: false
     t.text "description"
+    t.text "flyer_image_data"
+    t.string "series_id"
+    t.integer "series_position"
+    t.string "recurrence_note"
+    t.index ["series_id"], name: "index_events_on_series_id"
   end
 
   create_table "ideas", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.string "description"
     t.integer "created_by"
     t.datetime "created_at", null: false

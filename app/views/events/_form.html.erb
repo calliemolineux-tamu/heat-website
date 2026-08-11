@@ -1,5 +1,8 @@
 <!-- app/views/events/_form.html.erb -->
-<%= form_with(model: @event, local: true) do |form| %>
+<%# Editing stays a plain full-page postback (local: true, no turbo_stream views for
+    edit/update). Creating is Turbo-enabled so it can be submitted inline from the
+    calendar's quick-add modal and get a turbo_stream response back. %>
+<%= form_with(model: @event, local: @event.persisted?, html: { multipart: true }, data: { controller: 'required-field' }) do |form| %>
   <% if @event.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
@@ -12,36 +15,74 @@
   <% end %>
 
   <div class="form-group">
-    <%= form.label :name %><br>
-    <%= form.text_field :name, class: 'form-control' %>
+    <%= form.label :name %>
+    <%= form.text_field :name, class: 'form-control', required: true %>
   </div>
 
-  <div class="form-group" id="event_start_time">
-    <%= form.label :start_time, "Event Start Time" %><br>
-    <%= form.datetime_select :start_time, ampm: true, include_seconds: false, class: 'form-control' %> 
+  <div class="form-group" id="event_start_time_group">
+    <%= form.label :start_time, "Event Start Time" %>
+    <%= form.text_field :start_time, value: @event.start_time&.strftime('%Y-%m-%d %H:%M'),
+                         class: 'form-control', required: true, data: { controller: 'datepicker' } %>
   </div>
 
-  <div class="form-group" id="event_end_time">
-    <%= form.label :end_time, "Event End Time" %><br>
-    <%= form.datetime_select :end_time, ampm: true, include_seconds: false, class: 'form-control' %> 
+  <div class="form-group" id="event_end_time_group">
+    <%= form.label :end_time, "Event End Time (optional)" %>
+    <%= form.text_field :end_time, value: @event.end_time&.strftime('%Y-%m-%d %H:%M'),
+                         class: 'form-control', data: { controller: 'datepicker' } %>
   </div>
 
   <div class="form-group">
-    <%= form.label :location %><br>
+    <%= form.label :location %>
     <%= form.text_field :location, class: 'form-control' %>
   </div>
 
   <% if current_user.role == "admin" %>
     <div class="form-group">
-      <%= form.label :passcode, "Attendance Passcode" %><br>
+      <%= form.label :passcode, "Attendance Passcode" %>
       <%= form.text_field :passcode, class: 'form-control' %>
     </div>
   <% end %>
 
   <div class="form-group">
-    <%= form.label :description %><br>
+    <%= form.label :description %>
     <%= form.text_area :description, rows: 3, class: 'form-control' %>
   </div>
+
+  <div class="form-group event__flyer-field" data-controller="event-flyer">
+    <%= form.label :flyer_image, class: 'event__flyer-label' do %>
+      <span>Select Image</span>
+      <%= form.file_field :flyer_image, class: 'file-input', accept: 'image/png,image/jpeg,image/webp',
+                           data: { event_flyer_target: 'input', action: 'change->event-flyer#preview' } %>
+    <% end %>
+    <%= tag.img data: { event_flyer_target: 'preview' },
+                 class: 'event__flyer-preview',
+                 alt: 'Flyer preview',
+                 src: (@event.flyer_image_url if @event.flyer_image.present?),
+                 hidden: !@event.flyer_image.present? %>
+  </div>
+
+  <% if @event.new_record? %>
+    <div class="form-group" data-controller="toggle">
+      <label class="form-checkbox">
+        <%= check_box_tag 'event[repeat]', '1', false, data: { action: 'toggle#update' } %>
+        Repeat this event
+      </label>
+
+      <div data-toggle-target="content" hidden class="form-group">
+        <%= label_tag 'event_frequency', 'Frequency' %>
+        <%= select_tag 'event[frequency]', options_for_select([['Weekly', 'weekly'], ['Monthly', 'monthly']]), class: 'form-control' %>
+
+        <%= label_tag 'event_occurrence_count', 'Number of occurrences (default 4, max 52)' %>
+        <%= number_field_tag 'event[occurrence_count]', nil, min: 1, max: 52, class: 'form-control' %>
+
+        <%= label_tag 'event_recurrence_end_date', 'Or repeat until' %>
+        <%= date_field_tag 'event[recurrence_end_date]', nil, class: 'form-control' %>
+
+        <p class="form-hint">Each occurrence is created as its own independent event -
+          editing or deleting one afterward will not affect the others.</p>
+      </div>
+    </div>
+  <% end %>
 
   <div class="form-group">
     <%= form.submit "Submit", class: 'btn btn--primary' %>

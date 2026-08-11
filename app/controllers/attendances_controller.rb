@@ -20,9 +20,10 @@ class AttendancesController < ApplicationController
     @event = Event.find(params[:event_id])
   end
 
-  # Validates the passcode and ensures the event is happening today.
+  # Validates the passcode and ensures the event is happening today. Admins can check
+  # in without a passcode.
   def valid_attendance?
-    valid_passcode?(params[:passcode]) && event_happening_today?
+    (admin_user? || valid_passcode?(params[:passcode])) && event_happening_today?
   end
 
   # Checks if the entered passcode matches the event's passcode.
@@ -30,9 +31,17 @@ class AttendancesController < ApplicationController
     entered_passcode == @event.passcode
   end
 
-  # Checks if the event is happening on the current date.
+  # Checks if the current user is an admin.
+  def admin_user?
+    current_user&.role == 'admin'
+  end
+
+  # Checks if the event is happening on the current date. end_time is optional -
+  # an event with no end_time is treated as having no defined upper bound.
   def event_happening_today?
-    @event.start_time.to_date <= Date.current && @event.end_time.to_date >= Date.current
+    return false if @event.start_time.to_date > Date.current
+
+    @event.end_time.blank? || @event.end_time.to_date >= Date.current
   end
 
   # Handles the logic for creating or updating an attendance record.

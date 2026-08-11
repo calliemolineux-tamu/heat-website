@@ -1,0 +1,42 @@
+<%# Renders the content of a single calendar day cell (the <td> box itself is styled by
+    simple_calendar's own today/past/future/prev-month/next-month/has-events classes -
+    see components/_event.scss). Shows the day number, up to MAX_VISIBLE_EVENTS event
+    chips, a "+N more" that opens a shared day-detail modal for busier days, and
+    (admins only) a quick-add control that opens the "New Event" modal prefilled to
+    this date. %>
+<% max_visible_events = 3 %>
+<div class="day-cell">
+  <div class="day-cell__header">
+    <span class="day-cell__number"><%= date.day %></span>
+    <% if @role == 'admin' %>
+      <%= link_to '+', new_event_path(start_date: date.iso8601),
+                   class: 'day-cell__add',
+                   data: { turbo_frame: dom_id(Event.new), action: 'click->modal#open' },
+                   title: 'Add event' %>
+    <% end %>
+  </div>
+
+  <% if events.any? %>
+    <div class="day-cell__events">
+      <% events.first(max_visible_events).each do |event| %>
+        <%= link_to event.name, event_path(event), class: 'event-pill' %>
+      <% end %>
+
+      <% if events.size > max_visible_events %>
+        <button type="button" class="day-cell__more"
+                data-action="click->day-events#show"
+                data-template-id="day-events-<%= date.iso8601 %>"
+                data-day-label="<%= date.strftime('%B %-d, %Y') %>">
+          +<%= events.size - max_visible_events %> more
+        </button>
+        <template id="day-events-<%= date.iso8601 %>">
+          <ul class="day-events-list">
+            <% events.drop(max_visible_events).each do |event| %>
+              <li><%= link_to event.name, event_path(event), class: 'event-pill event-pill--block' %></li>
+            <% end %>
+          </ul>
+        </template>
+      <% end %>
+    </div>
+  <% end %>
+</div>
