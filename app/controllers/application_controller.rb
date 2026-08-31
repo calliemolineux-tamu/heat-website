@@ -62,7 +62,9 @@ class ApplicationController < ActionController::Base
                       when 'member'
                         ['members']
                       else
-                        %w[events leaderboard merch ideas members links]
+                        # Guests (and freshly-signed-in 'user' role) can browse events and
+                        # photos read-only; the rest still require at least member.
+                        %w[leaderboard merch ideas members links]
                       end
 
     @nav_links.reject! { |link| links_to_reject.include?(link[:name]) }

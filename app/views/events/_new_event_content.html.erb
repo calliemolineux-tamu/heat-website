@@ -1,0 +1,10 @@
+<div class="modal-header">
+  <h2>New Event</h2>
+  <button type="button" class="modal-close" data-action="click->modal#close" aria-label="Close">&times;</button>
+</div>
+
+<%= render 'form' %>
+
+<div class="new-event-links">
+  <%= link_to 'Back to Events', events_path, class: 'btn btn--tertiary', data: { turbo_frame: '_top' } %>
+</div>

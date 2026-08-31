@@ -4,23 +4,59 @@
 .container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 120px 20px 20px; // Top padding to clear the navbar
+  padding: 180px 20px 20px; // Top padding to clear the navbar + the back button
+  // .container is also (re-)declared with `padding-top: 95px !important` in
+  // _ideas.scss and _merch.scss for their own unrelated pages. !important
+  // beats normal cascade order/specificity outright, so without matching it
+  // here that unrelated rule silently wins on every page using .container,
+  // including this one. Declared !important here too so this page's own
+  // later-imported rule (see application.scss import order) wins instead.
+  padding-top: 180px !important;
 }
 
 /* Event Details Page Styling */
 .event-details {
-  background-color: #f8f9fa;
-  padding: 120px 20px 20px;
+  position: relative;
+  background-color: var(--color-background);
+  padding: 180px 20px 20px; // extra room above the title for the back button, see below
+  padding-top: 180px !important; // see the .container comment above - same collision applies here
   border-radius: 8px;
   margin-top: 20px;
+
+  // Pinned to the top-left corner of the card, just below the fixed navbar
+  // (position: fixed; height: 6rem; z-index: 2000) rather than sitting in
+  // normal document flow, so it reads as a corner "back" affordance instead
+  // of a full-width block above the title. The card's own top padding above
+  // is sized to leave clear space below this button before the title starts.
+  &__back {
+    position: absolute;
+    top: calc(6rem + 12px);
+    left: 20px;
+    margin-bottom: 0;
+    z-index: 1;
+  }
 }
 
 /* Centered title for the Event Details page */
 .event-header h1 {
   font-size: 2em;
-  color: #444;
+  color: var(--color-text-header);
   margin-bottom: 20px;
   text-align: center;
+}
+
+.event-flyer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  &__image {
+    max-width: 100%;
+    max-height: 320px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-small);
+  }
 }
 
 /* Event Information Bubbles */
@@ -34,11 +70,11 @@
   }
 
   .event-bubble {
-    background-color: #ffffff; // White background for contrast
+    background-color: var(--color-white); // White background for contrast
     border: 2px solid var(--color-secondary-rotate); // Light green border
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-small);
     transition: transform 0.2s ease-in-out;
 
     &:hover {
@@ -47,16 +83,43 @@
 
     h3 {
       font-size: 1.1em;
-      color: #333;
+      color: var(--color-text-header);
       font-weight: 600;
       margin-bottom: 5px;
     }
 
     p {
       font-size: 1em;
-      color: #555;
+      color: var(--color-text-body);
       margin: 0;
     }
+  }
+}
+
+.event-series {
+  margin-top: 20px;
+  padding: 15px 20px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-light);
+  border-radius: var(--border-radius);
+
+  h3 {
+    font-size: 1em;
+    margin-bottom: 10px;
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__current {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
   }
 }
 
@@ -67,6 +130,28 @@
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 20px;
+}
+
+/* Member check-in form */
+.checkin-form {
+  margin-top: 20px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  // The "Looking for check in? Sign in" prompt shown to logged-out visitors
+  &--prompt {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+
+    p {
+      margin: 0;
+    }
+  }
 }
 
 /* Attendance List Table Styling */
@@ -81,87 +166,20 @@
 
   table {
     width: 100%;
+    max-width: 500px;
+    margin: 10px auto 0;
     border-collapse: collapse;
-    margin-top: 10px;
 
     th, td {
       padding: 10px;
       text-align: left;
-      border: 1px solid #ddd;
+      border: 1px solid var(--color-light);
     }
 
     th {
-      background-color: #e8f4e8;
-      color: #333;
+      background-color: var(--color-glint);
+      color: var(--color-text-header);
       font-weight: 600;
     }
   }
 }
-
-/* Form styling for consistent alignment in New/Edit Event pages */
-.new-event-form, .edit-event-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-
-  label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-  }
-
-  input[type="text"], input[type="datetime-local"], textarea {
-    width: 100%;
-    max-width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-
-  textarea {
-    min-height: 100px; // Adjust height as needed
-    resize: vertical; // Allow vertical resizing only
-  }
-
-  /* Optional styling to center the form on the page */
-  align-items: center;
-  text-align: center;
-}
-
-// /* Button styling - maintain color scheme and consistency */
-// .btn--primary {
-//   background-color: #4e892f;
-//   color: white;
-//   border: none;
-//   border-radius: 4px;
-//   padding: 8px 16px;
-//   cursor: pointer;
-// }
-
-// .btn--secondary {
-//   background-color: #6c757d;
-//   color: white;
-//   border: none;
-//   border-radius: 4px;
-//   padding: 8px 16px;
-//   cursor: pointer;
-// }
-
-// .btn--tertiary {
-//   background-color: #2a5215;
-//   color: white;
-//   border: none;
-//   border-radius: 4px;
-//   padding: 8px 16px;
-//   cursor: pointer;
-// }
-
-// .btn--danger {
-//   background-color: #2a5215;
-//   color: white;
-//   border: none;
-//   border-radius: 4px;
-//   padding: 8px 16px;
-//   cursor: pointer;
-// }

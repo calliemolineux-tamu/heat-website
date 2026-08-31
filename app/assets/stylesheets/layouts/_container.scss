@@ -1,31 +1,38 @@
 .container {
   width: 100%;
   height: 100%;
-  padding-right: var(--space-xs);
-  padding-left: var(--space-xs);
+  // Edge buffer doubled from the original --space-xs/--space-m: mobile now uses
+  // what used to be the tablet+ value, and tablet+ doubles again to --space-xl.
+  padding-right: var(--space-m);
+  padding-left: var(--space-m);
   margin-left: auto;
   margin-right: auto;
   background-color: var(--color-primary-bg);
-  padding-bottom: var(--space-m);
+  padding-bottom: var(--space-xl);
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
 
   @include media(tabletAndUp) {
-    padding-right: var(--space-m);
-    padding-left: var(--space-m);
+    padding-right: var(--space-xl);
+    padding-left: var(--space-xl);
     max-width: 70rem;
   }
 
   &-full {
-    width: 100%;  
+    width: 100%;
     max-width: 100%;
-    padding-right: var(--space-xs);
-    padding-left: var(--space-xs);
+    padding-right: var(--space-m);
+    padding-left: var(--space-m);
     background-color: var(--color-primary-bg);
-    padding-bottom: var(--space-m);
+    padding-bottom: var(--space-xl);
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
     margin-left: auto;
     margin-right: auto;
+
+    @include media(tabletAndUp) {
+      padding-right: var(--space-xl);
+      padding-left: var(--space-xl);
+    }
   }
 }

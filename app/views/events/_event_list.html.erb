@@ -1,0 +1,5 @@
+<%# The sortable list of event cards for the current month, factored out so it can be
+    fully re-rendered via Turbo Stream after an inline create. %>
+<% events.each do |event| %>
+  <%= render 'events/event_card', event: event %>
+<% end %>

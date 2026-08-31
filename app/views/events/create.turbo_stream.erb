@@ -1,0 +1,15 @@
+<%= turbo_stream.replace "flash_messages" do %>
+  <%= render "shared/flash" %>
+<% end %>
+
+<%= turbo_stream.replace "event-modal" do %>
+  <%= render 'events/event_modal' %>
+<% end %>
+
+<%= turbo_stream.replace "calendar" do %>
+  <%= render 'events/month_calendar_panel', events: @events %>
+<% end %>
+
+<%= turbo_stream.update "event_list" do %>
+  <%= render 'events/event_list', events: @events %>
+<% end %>

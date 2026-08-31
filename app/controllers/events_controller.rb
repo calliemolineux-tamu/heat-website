@@ -3,46 +3,44 @@
 # Controller for managing events, including CRUD operations and attendance tracking.
 class EventsController < ApplicationController
   helper EventsHelper
+  include ActionView::RecordIdentifier
 
-  before_action :set_event, only: %i[show edit update destroy archive unarchive]
+  before_action :set_event, only: %i[show edit update destroy]
   before_action :set_user, :role, :set_navbar_variables
-  before_action :authenticate_admin!, only: %i[new create edit update destroy archive unarchive]
-  before_action :authenticate_member!, only: %i[show]
+  before_action :authenticate_admin!, only: %i[new create edit update destroy]
 
   # Display all events
   def index
     start_date = parse_start_date(params[:start_date])
     end_date = start_date.end_of_month
 
-    sort_column = params[:sort] || 'start_time'
-    sort_direction = params[:direction] || 'asc'
-
-    @events = Event.where(archived: false, start_time: start_date..end_date)
-                   .order("#{sort_column} #{sort_direction}")
+    @events = Event.where(start_time: start_date..end_date).order(:start_time)
   end
 
   # Show a single event
   def show
     @attendances = Attendance.where(event: @event)
+    @series_events = Event.in_series(@event.series_id) if @event.series_id.present?
   end
 
-  # Initialize a new event object
+  # Initialize a new event object, optionally prefilled from a calendar day click
   def new
-    @event = Event.new
+    @event = Event.new(start_time: prefill_start_time)
+    respond_to do |format|
+      format.turbo_stream
+      format.html
+    end
   end
 
   # Edit an existing event
   def edit; end
 
-  # Create a new event in the database
+  # Create a new event (or a recurring series of events) in the database
   def create
-    Rails.logger.debug params[:event]
-    @event = Event.new(event_params)
-
-    if @event.save
-      redirect_to @event, notice: 'Event was successfully created.'
+    if repeat_requested?
+      create_series
     else
-      render :new, status: :unprocessable_entity
+      create_single
     end
   end
 
@@ -64,29 +62,6 @@ class EventsController < ApplicationController
     end
   end
 
-  # Display all archived events
-  def archived
-    @archived_events = Event.where(archived: true)
-  end
-
-  # Archive an event
-  def archive
-    if @event.update(archived: true)
-      redirect_to events_path, notice: 'Event was successfully archived.'
-    else
-      redirect_to @event, alert: 'Failed to archive event.'
-    end
-  end
-
-  # Unarchive an event
-  def unarchive
-    if @event.update(archived: false)
-      redirect_to archived_events_path, notice: 'Event was successfully unarchived and restored to the main list.'
-    else
-      redirect_to archived_events_path, alert: 'Failed to unarchive the event.'
-    end
-  end
-
   private
 
   # Parse the start date from parameters or default to the current month.
@@ -105,6 +80,82 @@ class EventsController < ApplicationController
 
   # Strong parameters to prevent mass assignment issues
   def event_params
-    params.require(:event).permit(:name, :passcode, :start_time, :end_time, :location, :description)
+    params.require(:event).permit(:name, :passcode, :start_time, :end_time, :location, :description, :flyer_image)
+  end
+
+  # When a calendar day's "+" quick-add link is clicked, prefill the new event's start time
+  # to noon on that day.
+  def prefill_start_time
+    return nil if params[:start_date].blank?
+
+    Date.parse(params[:start_date]).noon
+  rescue ArgumentError
+    nil
+  end
+
+  def repeat_requested?
+    params.dig(:event, :repeat) == '1'
+  end
+
+  # Recurrence controls (frequency/occurrence_count/recurrence_end_date) are read separately
+  # from event_params so they're never mass-assigned onto Event directly.
+  def recurrence_attributes
+    params.require(:event).permit(:frequency, :occurrence_count, :recurrence_end_date)
+  end
+
+  def create_single
+    @event = Event.new(event_params)
+
+    respond_to do |format|
+      if @event.save
+        format.html { redirect_to @event, notice: 'Event was successfully created.' }
+        format.turbo_stream do
+          flash.now[:notice] = 'Event was successfully created.'
+          load_calendar_month_for(@event)
+        end
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.turbo_stream { render :new, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def create_series
+    attributes = event_params.to_h
+    flyer_image = attributes.delete(:flyer_image) # only attach the flyer to the first occurrence
+
+    events = EventSeriesBuilder.new(
+      base_attributes: attributes,
+      frequency: recurrence_attributes[:frequency],
+      count: recurrence_attributes[:occurrence_count].presence&.to_i,
+      until_date: recurrence_attributes[:recurrence_end_date].presence
+    ).build
+
+    events.first.flyer_image = flyer_image if flyer_image.present?
+    Event.transaction { events.each(&:save!) }
+    @event = events.first
+
+    respond_to do |format|
+      format.html { redirect_to @event, notice: "#{events.size} recurring events were successfully created." }
+      format.turbo_stream do
+        flash.now[:notice] = "#{events.size} recurring events were successfully created."
+        load_calendar_month_for(@event)
+      end
+    end
+  rescue ActiveRecord::RecordInvalid => e
+    @event = e.record
+    respond_to do |format|
+      format.html { render :new, status: :unprocessable_entity }
+      format.turbo_stream { render :new, status: :unprocessable_entity }
+    end
+  end
+
+  # Loads @events for the month containing the given event, for re-rendering the calendar
+  # panel and event list after an inline create.
+  def load_calendar_month_for(event)
+    start_date = event.start_time.to_date.beginning_of_month
+    end_date = start_date.end_of_month
+    @events = Event.where(start_time: start_date..end_date).order(:start_time)
+    render :create
   end
 end

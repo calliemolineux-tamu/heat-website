@@ -1,0 +1,23 @@
+<%# A single event card in the sortable list. Shared between the events#index list and
+    the Turbo Stream response that prepends a newly created event without a page reload. %>
+<div class="event" id="<%= dom_id(event) %>">
+  <% if event.flyer_image.present? %>
+    <%= image_tag event.flyer_image_url, class: 'event__flyer-thumb', alt: "#{event.name} flyer" %>
+  <% end %>
+
+  <h3><%= link_to event.name, event_path(event) %></h3>
+  <p><%= event.location %></p>
+  <p><%= event.start_time.strftime("%B %d, %Y") %></p>
+  <p>
+    <% if event.end_time.blank? %>
+      <%= event.start_time.strftime("%l:%M %p") %>
+    <% elsif event.start_time.strftime("%p") == event.end_time.strftime("%p") %>
+      <%= event.start_time.strftime("%l:%M") %> - <%= event.end_time.strftime("%l:%M %p") %>
+    <% else %>
+      <%= event.start_time.strftime("%l:%M %p") %> - <%= event.end_time.strftime("%l:%M %p") %>
+    <% end %>
+  </p>
+  <% if event.series_id.present? %>
+    <p class="event__series-badge">Part of a recurring series</p>
+  <% end %>
+</div>

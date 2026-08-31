@@ -1,65 +1,276 @@
-.calendar {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); // 7 days a week
-  gap: 8px;
-  flex-grow: 1;
+// ============================================================
+// Month calendar
+// ============================================================
+// simple_calendar renders a plain <table>. A <tr> given `display: grid` while
+// its <td> children stay `display: table-cell` is undefined/inconsistent
+// behavior (the cells aren't valid grid items in that state in every engine)
+// - that's what caused the tall, narrow, misaligned columns. Instead we
+// collapse table/thead/tbody/tr to `display: contents` so they vanish from
+// the box tree entirely, leaving <table> itself as a single real grid
+// container whose direct items are the <th>/<td> cells. Because there are
+// always exactly 7 header cells + a multiple of 7 day cells in DOM order,
+// the grid's default row-by-row auto-placement lands them in the right
+// rows with no manual row tracking needed.
+
+// Puts "Create New Event" inline with the page title instead of the row of
+// links that used to sit above the calendar. Scoped with an extra class
+// (rather than overriding the shared, global `.header`) so this doesn't
+// affect the plain page headers used elsewhere.
+.header.events-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
 }
 
-.day {
-  padding: 10px;
-  background-color: #f8f9fa;
-  text-align: center;
-  border-radius: 5px;
+.calendar {
+  width: 100%;
+}
 
-  @include media(mobile) {
-    padding: 5px;
-  }
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  width: 100%;
+}
 
-  &:has(a) {
-    padding: 0px;
-    height: 100%;
+.simple-calendar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  width: 100%;
+
+  table {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--space-xs);
     width: 100%;
   }
+
+  thead,
+  tbody,
+  tr {
+    display: contents;
+  }
+
+  th,
+  td {
+    display: block;
+  }
+
+  th {
+    text-align: center;
+    font-size: var(--font-size-s);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding-bottom: var(--space-xs);
+  }
 }
 
-
-
-.event-date {
-  background-color: var(--color-secondary-rotate);
-  color: var(--color-tertiary);
-  border-radius: var(--border-radius);
-  display: inline-block;
+.calendar-heading {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-s);
   width: 100%;
+
+  nav {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  nav a {
+    padding: var(--space-xxs) var(--space-s);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-light);
+    color: var(--color-text-body);
+    font-size: var(--font-size-s);
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      background-color: var(--color-glint);
+      color: var(--color-secondary);
+    }
+  }
+}
+
+.calendar-title {
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+}
+
+// simple_calendar classes every day <td> with "day" plus today/past/future/
+// prev-month/next-month/current-month/has-events/wday-N (see td_classes_for
+// in the gem). We style the cell itself here; .day-cell (below) only handles
+// the flex layout of its contents.
+.calendar td.day {
+  min-height: 9rem;
+  padding: var(--space-xs);
+  background-color: var(--color-white);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-light);
+  vertical-align: top;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+  @include media(mobile) {
+    min-height: 5.5rem;
+    padding: var(--space-xxs);
+  }
+
+  &:hover {
+    box-shadow: var(--shadow-small);
+  }
+
+  // Reveal the quick-add "+" on hover over the whole tile, not just the
+  // .day-cell content box (which can be shorter than the tile on days with
+  // few/no events, since it only grows to fit its own content).
+  &:hover .day-cell__add {
+    opacity: 1;
+  }
+
+  &.today {
+    background-color: var(--color-glint);
+    border-color: var(--color-secondary-rotate);
+    border-width: 2px;
+  }
+
+  &.prev-month,
+  &.next-month {
+    background-color: var(--color-background);
+    opacity: 0.55;
+  }
+}
+
+.day-cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
   height: 100%;
-  line-height: 70px;
-  transition: color 0.3s ease, background-color 0.3s ease;
-  
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__number {
+    font-size: var(--font-size-m);
+    font-weight: 600;
+    color: var(--color-text-header);
+  }
+
+  &__add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    line-height: 1;
+    border-radius: 50%;
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    font-size: var(--font-size-s);
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.15s ease, background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--color-secondary-rotate);
+    }
+  }
+
+  &__events {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    overflow: hidden;
+  }
+
+  &__more {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+
+    &:hover {
+      color: var(--color-secondary-rotate);
+    }
+  }
+}
+
+.event-pill {
+  display: block;
+  width: 100%;
+  padding: 2px 6px;
+  background-color: var(--color-glint);
+  color: var(--color-secondary);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  transition: color 0.2s ease, background-color 0.2s ease;
 
   &:hover {
     background-color: var(--color-secondary);
     color: var(--color-glint);
   }
 
-  @include media(mobile) {
-    line-height: 50px;
-  } 
+  &--block {
+    padding: var(--space-xs) var(--space-s);
+    font-size: var(--font-size-s);
+  }
+}
 
+.day-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .no-event {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
+  display: none; // day cells with no events simply show no pills now
 }
 
-.calendar,
-.simple-calendar {
+// ============================================================
+// Event list / cards
+// ============================================================
+
+.events {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
+  // Explicit heights below make each column self-contained instead of
+  // relying on align-items: stretch to match the calendar's height -
+  // stretch here interacts badly with .event__container's own auto
+  // min-height (a flex item that is *also* a flex container gets its
+  // stretched cross-size overridden by its own content's full height,
+  // so the tile grew to fit every event instead of staying capped). An
+  // explicit height is unambiguous and can't be overridden that way.
+  align-items: flex-start;
+  gap: var(--space-l);
+  width: 100%;
+
+  @include media(mobile) {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.calendar-container {
+  flex: 2 1 0%; // ~2/3 of the row
+  min-width: 0; // allow the grid to shrink below its content size instead of overflowing
 }
 
 .event {
@@ -71,20 +282,6 @@
   background-color: var(--color-primary-bg);
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
-  &__sort {
-    background-color: var(--color-primary);
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-
-    &-options {
-      display: flex;
-      flex-direction: row;
-      gap: 10px;
-      justify-content: space-around;
-    }
-  }
-
   @include media(mobile) {
     padding: 5%;
     width: 100%;
@@ -95,18 +292,27 @@
 
   }
 
+  // Its own fixed-height tile rather than growing to fit every event and
+  // stretching the whole page - the list inside (#event_list below) scrolls
+  // independently once it outgrows the tile. A hard, explicit height is
+  // used deliberately instead of stretching to match the calendar's height -
+  // that approach doesn't reliably cap the tile's height (see .events above).
   &__container {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    flex-grow: 0;
-    min-width: 30%;
-    max-height: inherit;
-    overflow-y: auto;
+    gap: var(--space-s);
+    flex: 1 1 0%; // ~1/3 of the row, paired with .calendar-container's flex: 2
+    min-width: 0;
+    height: 37.5rem; // 600px
+    background-color: var(--color-white);
+    border-radius: var(--border-radius);
+    padding: var(--space-m);
+    box-shadow: var(--shadow-small);
 
     @include media(mobile) {
       width: 100%;
-    }  
+      height: 28rem;
+    }
   }
 
   h3 {
@@ -117,75 +323,134 @@
     }
   }
 
-  &__links {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    justify-content: space-around;
-    align-items: center;
+  &__flyer-thumb {
+    width: 100%;
+    max-height: 140px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+  }
+
+  &__series-badge {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 2px 8px;
+    background-color: var(--color-glint);
+    color: var(--color-text-header);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-xs);
   }
 }
 
-
-.events {
+.new-event-links {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 20px;
-  
-  @include media(tabletAndUp) {
-    max-height: 80vh;
-  }
-
-  @include media(mobile) {
-    width: 100%;
-  }
-
-  &__links {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    justify-content: space-around;
-    align-items: center;
-  }
+  justify-content: flex-end;
+  margin-top: var(--space-m);
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--color-light);
 }
 
-.calendar-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-
-  thead {
-    width: 100%;
-    
-    tr {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    // gap: auto;
-
-    th {
-      width: 100%;
-    }
-  }
+.event__container-title {
+  font-size: var(--font-size-l);
+  font-weight: 700;
+  color: var(--color-text-header);
+  flex-shrink: 0; // stays put at the top of the tile while #event_list scrolls beneath it
 }
 
-.calendar-heading {
+// The scrollable event list inside the "Upcoming Events" tile (see
+// .event__container above). min-height: 0 is required here - without it a
+// flex child won't shrink below its content size, so overflow-y: auto would
+// never actually kick in and the tile would grow instead of scrolling.
+#event_list {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
+  gap: 8px;
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
 }
 
-.calendar-title {
-  font-size: 1.5rem;
-  font-weight: bold;
+// ============================================================
+// Event form: flyer upload
+// ============================================================
+
+.event__flyer-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+// Scoped under .event__flyer-field (and qualified with the `label` element)
+// so this unambiguously out-specificities the generic
+// `.form-group label { display: block; ... }` rule in _form.scss - this
+// label is a styled upload button, not a plain field label, and needs to
+// keep its inline-flex layout regardless of stylesheet import order.
+.event__flyer-field label.event__flyer-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  width: fit-content;
+  margin-bottom: 0;
+  padding: var(--space-xs) var(--space-m);
+  border: var(--border);
+  border-radius: var(--border-radius);
+  font-weight: normal;
+  cursor: pointer;
+  background-color: var(--color-white);
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: var(--color-secondary-rotate);
+  }
+
+  .file-input {
+    display: none;
+  }
+}
+
+.event__flyer-preview {
+  max-width: 240px;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+  border: var(--border);
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+// Retheme the flatpickr popup (used on the event start/end time fields) to match
+// the site's dark green / tan palette instead of flatpickr's default blue theme.
+.flatpickr-calendar {
+  .flatpickr-day.selected,
+  .flatpickr-day.selected:hover {
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
+  }
+
+  .flatpickr-day:hover {
+    background-color: var(--color-glint);
+  }
+
+  .flatpickr-months .flatpickr-month,
+  .flatpickr-current-month .flatpickr-monthDropdown-months,
+  .flatpickr-weekdays {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    fill: var(--color-white);
+  }
+
+  .flatpickr-current-month .flatpickr-monthDropdown-months {
+    background-color: transparent;
+  }
+
+  .flatpickr-weekday {
+    background-color: var(--color-secondary);
+    color: var(--color-tertiary);
+  }
+
+  .flatpickr-time input:hover,
+  .flatpickr-time .flatpickr-am-pm:hover {
+    background-color: var(--color-glint);
+  }
 }

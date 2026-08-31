@@ -1,78 +1,103 @@
 <main class="container event-details">
+  <%= link_to '← Back to Events', events_path, class: 'btn btn--secondary event-details__back' %>
+
   <header class="header">
     <h1><%= @event.name.upcase %> DETAILS</h1>
+    <% if @event.series_id.present? %>
+      <p class="event__series-badge">Part of a recurring series</p>
+    <% end %>
   </header>
 
+  <% if @event.flyer_image.present? %>
+    <div class="event-flyer">
+      <%= image_tag @event.flyer_image_url, class: 'event-flyer__image', alt: "#{@event.name} flyer" %>
+    </div>
+  <% end %>
+
   <section class="event-info">
+    <div class="event-bubble">
+      <h3>Date</h3>
+      <p>
+        <%= @event.start_time.strftime("%B %d, %Y %l:%M %p") %>
+        <% if @event.end_time.present? %> - <%= @event.end_time.strftime("%l:%M %p") %><% end %>
+      </p>
+    </div>
+
+    <% if @role == 'admin' %>
       <div class="event-bubble">
-        <h3>Date</h3>
-        <p><%= @event.start_time.strftime("%B %d, %Y %l:%M %p") %> - <%= @event.end_time.strftime("%l:%M %p") %></p>
+        <h3>Attendance Passcode</h3>
+        <p><%= @event.passcode %></p>
       </div>
-
-      <% if current_user.role == 'admin' %>
-        <div class="event-bubble">
-          <h3>Attendance Passcode</h3>
-          <p><%= @event.passcode %></p>
-        </div>
-      <% end %>
-
+    <% end %>
 
     <div class="event-bubble">
       <h3>Description</h3>
       <p><%= @event.description %></p>
     </div>
-
-    
   </section>
 
-  <section class="action-buttons">
-    <%= link_to 'Back to Events', events_path, class: 'btn btn--secondary' %>
-    <% if current_user&.role == 'admin' %>
+  <% if @series_events.present? %>
+    <section class="event-series">
+      <h3>Other occurrences in this series</h3>
+      <ul class="event-series__list">
+        <% @series_events.each do |series_event| %>
+          <li>
+            <%= link_to series_event.start_time.strftime("%B %d, %Y"), event_path(series_event) %>
+            <% if series_event == @event %> <span class="event-series__current">(this event)</span><% end %>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
+
+  <% if @role == 'admin' %>
+    <section class="action-buttons">
       <%= link_to 'Edit Event', edit_event_path(@event), class: 'btn btn--primary' %>
       <%= link_to 'Delete Event', event_path(@event), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn--danger' %>
+    </section>
+  <% end %>
 
-      <% if @event.archived? %>
-        <%= link_to 'Unarchive Event', unarchive_event_path(@event), method: :put, data: { confirm: 'Are you sure?' }, class: 'btn btn--tertiary' %>
-      <% else %>
-        <%= link_to 'Archive', archive_event_path(@event), method: :put, data: { turbo_confirm: 'Are you sure?' }, class: 'btn btn--tertiary' %>
-      <% end %>
-    <% end %>
-  </section>
-
-  <% if current_user.role == 'member' %>
-    <br>
-    <section class="checkin-form">
+  <% if %w[member admin].include?(@role) %>
+    <section class="checkin-form event-bubble">
       <%= form_with url: event_attendances_path(@event), local: true do |form| %>
-        <div class="form-group event-bubble" style="display: flex; flex-direction: column;">
-          <%= form.label :passcode, "Enter Attendance Passcode" %>
-          <%= form.text_field :passcode, name: 'passcode', class: 'form-control' %>
-        </div>
-        <br>
+        <% if @role == 'member' %>
+          <div class="form-group">
+            <%= form.label :passcode, "Enter Attendance Passcode" %>
+            <%= form.text_field :passcode, name: 'passcode', class: 'form-control' %>
+          </div>
+        <% end %>
         <div class="form-group">
           <%= form.submit "Check In", class: 'btn btn--primary' %>
         </div>
       <% end %>
     </section>
-    <br>
+  <% elsif current_user.nil? %>
+    <section class="checkin-form checkin-form--prompt event-bubble">
+      <p>Looking for check in?</p>
+      <%= button_to 'Sign in', @auth_link[:path], method: @auth_link[:method],
+                     data: { turbo: 'false' }, class: 'btn btn--primary' %>
+    </section>
   <% end %>
 
-  <section class="attendance-list" style="width: auto;">
-    <h2>Attendance List</h2>
-    <table class="table table-bordered" style="width: 500px;">
-      <thead style="width: 100%;">
-        <tr style="width: 100%;">
-          <th style="width: 50%;">Member</th>
-          <th style="width: 300px;">Checked In At</th>
-        </tr>
-      </thead>
-      <tbody style="width: 100%;">
-        <% @attendances.each do |attendance| %>
-          <tr style="width: 100%;">
-            <td style="width: 50%;"><%= attendance.user.full_name %></td>
-            <td style="width: 300px;"><%= attendance.checked_in_at ? attendance.checked_in_at.strftime("%B %d, %Y %l:%M %p") : 'N/A' %></td>
+  <% if current_user.present? %>
+    <section class="attendance-list">
+      <h2>Attendance List</h2>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Member</th>
+            <th>Checked In At</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </section>
+        </thead>
+        <tbody>
+          <% @attendances.each do |attendance| %>
+            <tr>
+              <td><%= attendance.user.full_name %></td>
+              <td><%= attendance.checked_in_at ? attendance.checked_in_at.strftime("%B %d, %Y %l:%M %p") : 'N/A' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </section>
+  <% end %>
 </main>

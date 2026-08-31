@@ -1,0 +1,10 @@
+<%# The "quick add event" modal shell. Rendered once on the index page, and
+    re-rendered wholesale (via turbo_stream.replace) after a successful inline
+    create - since this partial never includes the "open" class itself (that's
+    only ever added client-side by modal_controller.js), replacing it is what
+    closes the modal instead of leaving a "created" confirmation to dismiss. %>
+<div id="event-modal" class="modal" data-modal-target="dialog" data-action="click->modal#closeBackground">
+  <div class="modal-content modal-content--wide">
+    <%= turbo_frame_tag dom_id(Event.new) %>
+  </div>
+</div>

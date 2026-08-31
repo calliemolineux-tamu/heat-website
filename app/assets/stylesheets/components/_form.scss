@@ -27,6 +27,83 @@
   }
 }
 
+// Generic .form-group/.form-control styling - used by the events, merch, and
+// other admin CRUD forms. Previously entirely unstyled, which is what made
+// forms (especially inside the compact quick-add modal) look cramped/rough.
+.form-group {
+  margin-bottom: var(--space-m);
+  text-align: left;
+
+  label {
+    display: block;
+    margin-bottom: var(--space-xxs);
+    font-weight: 600;
+    font-size: var(--font-size-s);
+    color: var(--color-text-header);
+    text-align: left;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: var(--space-xs) var(--space-s);
+  border: var(--border);
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  font-size: var(--font-size-m);
+  color: var(--color-text-body);
+  background-color: var(--color-white);
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-secondary-rotate);
+    box-shadow: 0 0 0 2px var(--color-glint);
+  }
+}
+
+textarea.form-control {
+  resize: vertical;
+}
+
+// Client-side "required field" validation (see required_field_controller.js)
+.form-control--invalid {
+  border-color: var(--color-red);
+}
+
+.form-error {
+  margin: var(--space-xxs) 0 0;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-red);
+}
+
+// A checkbox + its inline label text (e.g. "Repeat this event"), as opposed
+// to the block field labels above. Qualified with the `label` element and
+// scoped under .form-group so it unambiguously outweighs the plain
+// `.form-group label { display: block; ... }` rule above.
+.form-group label.form-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-weight: 600;
+  font-size: var(--font-size-s);
+  color: var(--color-text-header);
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--color-secondary);
+  }
+}
+
 form {
   #event_description,
   #user_dues {
@@ -35,5 +112,30 @@ form {
     border-radius: var(--border-radius);
     border-width: 2px !important;
     background-color: white;
+  }
+}
+
+.form-hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-xxs);
+}
+
+#error_explanation {
+  margin-bottom: var(--space-m);
+  padding: var(--space-s) var(--space-m);
+  border-radius: var(--border-radius);
+  background-color: hsl(356, 87%, 96%);
+  border: 1px solid var(--color-red);
+  color: var(--color-red);
+
+  h2 {
+    font-size: var(--font-size-s);
+    margin: 0 0 var(--space-xxs);
+  }
+
+  ul {
+    margin: 0;
+    padding-left: var(--space-l);
   }
 }
