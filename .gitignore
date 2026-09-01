@@ -7,6 +7,7 @@
 /node_modules
 /log/development.log
 /config/master.key
+/public/assets
 /public/packs
 /public/uploads
 /log/test.log
