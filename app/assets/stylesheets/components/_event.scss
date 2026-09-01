@@ -1,16 +1,12 @@
 // ============================================================
 // Month calendar
 // ============================================================
-// simple_calendar renders a plain <table>. A <tr> given `display: grid` while
-// its <td> children stay `display: table-cell` is undefined/inconsistent
-// behavior (the cells aren't valid grid items in that state in every engine)
-// - that's what caused the tall, narrow, misaligned columns. Instead we
-// collapse table/thead/tbody/tr to `display: contents` so they vanish from
-// the box tree entirely, leaving <table> itself as a single real grid
-// container whose direct items are the <th>/<td> cells. Because there are
-// always exactly 7 header cells + a multiple of 7 day cells in DOM order,
-// the grid's default row-by-row auto-placement lands them in the right
-// rows with no manual row tracking needed.
+// simple_calendar renders a plain <table> (thead > tr > th, tbody > tr > td).
+// We re-lay-it-out with CSS grid: each <tr> becomes its own 7-column grid row
+// and each <th>/<td> becomes a block-level grid item. Making the *row* the
+// grid container (rather than collapsing everything with `display: contents`)
+// keeps `align-items: stretch` working per week, so every day cell in a week
+// matches the height of the busiest one instead of leaving a ragged bottom edge.
 
 // Puts "Create New Event" inline with the page title instead of the row of
 // links that used to sit above the calendar. Scoped with an extra class
@@ -41,17 +37,23 @@
   gap: var(--space-m);
   width: 100%;
 
-  table {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: var(--space-xs);
+  table,
+  thead,
+  tbody {
+    display: block;
     width: 100%;
   }
 
-  thead,
-  tbody,
   tr {
-    display: contents;
+    display: grid;
+    // minmax(0, 1fr) rather than 1fr so the 7 columns can shrink below their
+    // content width on narrow screens instead of overflowing the page.
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: var(--space-xs);
+  }
+
+  tbody tr + tr {
+    margin-top: var(--space-xs);
   }
 
   th,
@@ -78,6 +80,11 @@
   align-items: center;
   gap: var(--space-s);
   width: 100%;
+
+  @include media(mobile) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
   nav {
     display: flex;
@@ -216,8 +223,12 @@
   font-size: var(--font-size-xs);
   font-weight: 600;
   line-height: 1.3;
-  white-space: normal;
-  overflow-wrap: anywhere;
+  // One line, clipped with an ellipsis - day cells are too narrow (especially
+  // on mobile) to wrap event names readably. Full names are shown in the
+  // "+N more" day modal and the Upcoming Events list.
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: color 0.2s ease, background-color 0.2s ease;
 
   &:hover {
@@ -228,6 +239,7 @@
   &--block {
     padding: var(--space-xs) var(--space-s);
     font-size: var(--font-size-s);
+    white-space: normal;
   }
 }
 
@@ -354,6 +366,11 @@
   font-weight: 700;
   color: var(--color-text-header);
   flex-shrink: 0; // stays put at the top of the tile while #event_list scrolls beneath it
+}
+
+.event__empty {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-s);
 }
 
 // The scrollable event list inside the "Upcoming Events" tile (see

@@ -13436,3 +13436,2419 @@ Processing by MerchandisesController#index as TURBO_STREAM
 Completed 200 OK in 9ms (Views: 6.2ms | ActiveRecord: 0.6ms | Allocations: 7573)
 
 
+[dotenv] Set [36mGOOGLE_OAUTH_CLIENT_ID[0m, [36mGOOGLE_OAUTH_CLIENT_SECRET[0m, [36mHOST_URL[0m, [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, and [36mAWS_BUCKET[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[35m (708.4ms)[0m  [1m[35mCREATE DATABASE "test_app_development" ENCODING = 'unicode'[0m
+  [1m[35m (628.9ms)[0m  [1m[35mCREATE DATABASE "test_app_test" ENCODING = 'unicode'[0m
+[dotenv] Set [36mGOOGLE_OAUTH_CLIENT_ID[0m, [36mGOOGLE_OAUTH_CLIENT_SECRET[0m, [36mHOST_URL[0m, [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, and [36mAWS_BUCKET[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE DATABASE "test_app_development" ENCODING = 'unicode'[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE DATABASE "test_app_test" ENCODING = 'unicode'[0m
+[dotenv] Set [36mGOOGLE_OAUTH_CLIENT_ID[0m, [36mGOOGLE_OAUTH_CLIENT_SECRET[0m, [36mHOST_URL[0m, [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, and [36mAWS_BUCKET[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[35m (12.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (8.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7992348028875656775)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateMerches (20240910213808)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (8.6ms)[0m  [1m[35mCREATE TABLE "merches" ("id" bigserial primary key, "link" character varying, "title" character varying, "description" character varying, "image" character varying, "stock" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240910213808"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateEvents (20240910213910)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE TABLE "events" ("id" bigserial primary key, "name" character varying, "date" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240910213910"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to DeviseCreateUsers (20240911023215)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (7.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying NOT NULL, "full_name" character varying, "uid" character varying, "avatar_url" character varying, "committee" character varying, "points" integer, "dues" integer, "role" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240911023215"]]
+  [1m[36mTRANSACTION (7.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePhotos (20240911193256)
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (10.2ms)[0m  [1m[35mCREATE TABLE "photos" ("id" bigserial primary key, "image_data" text, "title" character varying, "description" text, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_c79d76afc0"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE INDEX "index_photos_on_user_id" ON "photos" ("user_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240911193256"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMerchandises (20240912004859)
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.6ms)[0m  [1m[35mCREATE TABLE "merchandises" ("id" bigserial primary key, "link" character varying, "title" character varying, "description" character varying, "image" character varying, "stock" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240912004859"]]
+  [1m[36mTRANSACTION (2.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateIdeas (20240912213549)
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.0ms)[0m  [1m[35mCREATE TABLE "ideas" ("id" bigserial primary key, "title" character varying NOT NULL, "description" character varying, "created_by" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240912213549"]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateAnnoucements (20240913160322)
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (8.9ms)[0m  [1m[35mCREATE TABLE "annoucements" ("id" bigserial primary key, "title" character varying, "description" text, "created_by" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240913160322"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateAttendances (20240918113149)
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.2ms)[0m  [1m[35mCREATE TABLE "attendances" ("id" bigserial primary key, "event_id" bigint NOT NULL, "user_id" bigint NOT NULL, "present" boolean, "passcode" character varying, "checked_in_at" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_777eb7170a"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+, CONSTRAINT "fk_rails_77ad02f5c5"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE INDEX "index_attendances_on_event_id" ON "attendances" ("event_id")[0m
+  [1m[35m (6.3ms)[0m  [1m[35mCREATE INDEX "index_attendances_on_user_id" ON "attendances" ("user_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240918113149"]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddPasscodeToEvents (20240918113704)
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.9ms)[0m  [1m[35mALTER TABLE "events" ADD "passcode" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240918113704"]]
+  [1m[36mTRANSACTION (5.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLinks (20240921034108)
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (11.4ms)[0m  [1m[35mCREATE TABLE "links" ("id" bigserial primary key, "title" character varying, "link" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240921034108"]]
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddStartTimeToEvents (20240927161218)
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "events" ADD "start_time" timestamp(6)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240927161218"]]
+  [1m[36mTRANSACTION (4.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLeaderboardCategories (20241003001431)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.7ms)[0m  [1m[35mCREATE TABLE "leaderboard_categories" ("id" bigserial primary key, "category_name" character varying, "min_points" integer, "color" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20241003001431"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to MigrateDateToStartTimeInEvents (20241003043953)
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEvent Load (0.8ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" IS NULL ORDER BY "events"."id" ASC LIMIT $1[0m  [["LIMIT", 1000]]
+  [1m[36mActiveRecord::SchemaMigration Create (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20241003043953"]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveDateFromEvents (20241003044047)
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.3ms)[0m  [1m[35mALTER TABLE "events" DROP COLUMN "date"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20241003044047"]]
+  [1m[36mTRANSACTION (3.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddEndTimeToEvents (20241003133002)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "events" ADD "end_time" timestamp(6)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20241003133002"]]
+  [1m[36mTRANSACTION (2.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddLocationToEvents (20241009000331)
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "events" ADD "location" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20241009000331"]]
+  [1m[36mTRANSACTION (2.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddOnDeleteCascadeToAttendances (20241010204542)
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.0ms)[0m  [1m[35mALTER TABLE "attendances" DROP CONSTRAINT "fk_rails_777eb7170a"[0m
+  [1m[35m (1.6ms)[0m  [1m[35mALTER TABLE "attendances" ADD CONSTRAINT "fk_rails_777eb7170a"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+ ON DELETE CASCADE[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20241010204542"]]
+  [1m[36mTRANSACTION (3.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddArchivedToEvents (20241013175954)
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "events" ADD "archived" boolean DEFAULT FALSE NOT NULL[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20241013175954"]]
+  [1m[36mTRANSACTION (3.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddUniqueIndexToAttendances (20241023234857)
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_attendances_on_user_id_and_event_id" ON "attendances" ("user_id", "event_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20241023234857"]]
+  [1m[36mTRANSACTION (5.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddDescriptionToEvents (20241028002427)
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "events" ADD "description" text[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20241028002427"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveStockFromMerch (20241104003607)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "merches" DROP COLUMN "stock"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20241104003607"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to ChangeDuesColumnTypeInUsers (20241124231443)
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (12.7ms)[0m  [1m[35mALTER TABLE "users" ALTER COLUMN "dues" TYPE text[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20241124231443"]]
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddFlyerImageDataToEvents (20260806000001)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "events" ADD "flyer_image_data" text[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20260806000001"]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddSeriesFieldsToEvents (20260806000002)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "events" ADD "series_id" character varying[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "events" ADD "series_position" integer[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "events" ADD "recurrence_note" character varying[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE INDEX "index_events_on_series_id" ON "events" ("series_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20260806000002"]]
+  [1m[36mTRANSACTION (2.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveArchivedFromEvents (20260806000003)
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "events" DROP COLUMN "archived"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20260806000003"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (1.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2026-09-01 17:47:00.536519"], ["updated_at", "2026-09-01 17:47:00.536519"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT pg_advisory_unlock(7992348028875656775)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+[dotenv] Set [36mGOOGLE_OAUTH_CLIENT_ID[0m, [36mGOOGLE_OAUTH_CLIENT_SECRET[0m, [36mHOST_URL[0m, [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, and [36mAWS_BUCKET[0m
+[dotenv] Loaded [33m.env[0m
+Started GET "/events" for 172.17.0.1 at 2026-09-01 17:53:50 +0000
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (1.7ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 81.1ms | Allocations: 480)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 4.8ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 313.6ms | Allocations: 11512)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 399.7ms | Allocations: 13893)
+  Rendered events/_event_list.html.erb (Duration: 34.0ms | Allocations: 160)
+  Rendered events/index.html.erb within layouts/application (Duration: 567.6ms | Allocations: 14988)
+Started GET "/" for 172.17.0.1 at 2026-09-01 17:53:58 +0000
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+Started GET "/" for 172.17.0.1 at 2026-09-01 17:54:02 +0000
+  Rendered shared/_carousel.html.erb (Duration: 52.9ms | Allocations: 1298)
+  Rendered shared/_carousel.html.erb (Duration: 0.4ms | Allocations: 260)
+  Rendered shared/_carousel.html.erb (Duration: 0.7ms | Allocations: 200)
+  Rendered home/index.html.erb within layouts/application (Duration: 154.7ms | Allocations: 4495)
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered shared/_carousel.html.erb (Duration: 0.8ms | Allocations: 288)
+  Rendered shared/_carousel.html.erb (Duration: 0.7ms | Allocations: 260)
+  Rendered shared/_carousel.html.erb (Duration: 0.6ms | Allocations: 200)
+  Rendered home/index.html.erb within layouts/application (Duration: 19.0ms | Allocations: 1325)
+  Rendered shared/_navbar.html.erb (Duration: 53.5ms | Allocations: 928)
+  Rendered shared/_navbar.html.erb (Duration: 54.3ms | Allocations: 1465)
+  Rendered shared/_flash.html.erb (Duration: 24.6ms | Allocations: 241)
+  Rendered shared/_flash.html.erb (Duration: 24.8ms | Allocations: 259)
+  [1m[36mLink Load (2.4ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 105.9ms | Allocations: 3265)
+  Rendered layout layouts/application.html.erb (Duration: 12379.2ms | Allocations: 207063)
+Completed 200 OK in 13616ms (Views: 12567.4ms | ActiveRecord: 12.4ms | Allocations: 218450)
+
+
+  [1m[36mLink Load (0.6ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 174.4ms | Allocations: 7796)
+  Rendered layout layouts/application.html.erb (Duration: 2466.7ms | Allocations: 132940)
+Completed 200 OK in 2587ms (Views: 2466.0ms | ActiveRecord: 8.5ms | Allocations: 135146)
+
+
+  Rendered shared/_navbar.html.erb (Duration: 0.9ms | Allocations: 541)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 25)
+  [1m[36mLink Load (0.5ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.6ms | Allocations: 930)
+  Rendered layout layouts/application.html.erb (Duration: 3543.1ms | Allocations: 164432)
+Completed 200 OK in 3668ms (Views: 3555.4ms | ActiveRecord: 0.5ms | Allocations: 167148)
+
+
+Started POST "/users/auth/google_oauth2" for 172.17.0.1 at 2026-09-01 17:54:11 +0000
+Started GET "/events" for 172.17.0.1 at 2026-09-01 17:54:20 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.8ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 13)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 34.3ms | Allocations: 9327)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 40.0ms | Allocations: 10401)
+  Rendered events/_event_list.html.erb (Duration: 0.1ms | Allocations: 9)
+  Rendered events/index.html.erb within layouts/application (Duration: 41.8ms | Allocations: 10546)
+  Rendered shared/_navbar.html.erb (Duration: 0.8ms | Allocations: 523)
+  Rendered shared/_flash.html.erb (Duration: 0.2ms | Allocations: 27)
+  [1m[36mLink Load (0.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.1ms | Allocations: 950)
+  Rendered layout layouts/application.html.erb (Duration: 51.9ms | Allocations: 13466)
+Completed 200 OK in 131ms (Views: 51.6ms | ActiveRecord: 1.9ms | Allocations: 14383)
+
+
+[dotenv] Set [36mGOOGLE_OAUTH_CLIENT_ID[0m, [36mGOOGLE_OAUTH_CLIENT_SECRET[0m, [36mHOST_URL[0m, [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, and [36mAWS_BUCKET[0m
+[dotenv] Loaded [33m.env[0m
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:18:56 +0000
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (1.1ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 94.6ms | Allocations: 480)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 259.0ms | Allocations: 11519)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 323.5ms | Allocations: 13899)
+  Rendered events/_event_list.html.erb (Duration: 40.5ms | Allocations: 157)
+  Rendered events/index.html.erb within layouts/application (Duration: 463.3ms | Allocations: 14883)
+  Rendered shared/_navbar.html.erb (Duration: 111.3ms | Allocations: 1422)
+  Rendered shared/_flash.html.erb (Duration: 25.2ms | Allocations: 191)
+  [1m[36mLink Load (0.9ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 106.8ms | Allocations: 2001)
+  Rendered layout layouts/application.html.erb (Duration: 23235.7ms | Allocations: 205644)
+Completed 200 OK in 24120ms (Views: 23324.6ms | ActiveRecord: 6.7ms | Allocations: 214758)
+
+
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:19:28 +0000
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.8ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 13)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 40.5ms | Allocations: 9331)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 48.6ms | Allocations: 10338)
+  Rendered events/_event_list.html.erb (Duration: 0.1ms | Allocations: 9)
+  Rendered events/index.html.erb within layouts/application (Duration: 50.4ms | Allocations: 10483)
+  Rendered shared/_navbar.html.erb (Duration: 43.9ms | Allocations: 1090)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 26)
+  [1m[36mLink Load (0.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.9ms | Allocations: 1302)
+  Rendered layout layouts/application.html.erb (Duration: 550.9ms | Allocations: 17987)
+Completed 200 OK in 636ms (Views: 551.0ms | ActiveRecord: 1.5ms | Allocations: 18842)
+
+
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:19:51 +0000
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.7ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 34.0ms | Allocations: 9242)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 38.7ms | Allocations: 10151)
+  Rendered events/_event_list.html.erb (Duration: 0.0ms | Allocations: 9)
+  Rendered events/index.html.erb within layouts/application (Duration: 40.1ms | Allocations: 10290)
+  Rendered shared/_navbar.html.erb (Duration: 41.2ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.8ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.8ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 511.2ms | Allocations: 17599)
+Completed 200 OK in 582ms (Views: 511.4ms | ActiveRecord: 1.5ms | Allocations: 18275)
+
+
+[dotenv] Set [36mGOOGLE_OAUTH_CLIENT_ID[0m, [36mGOOGLE_OAUTH_CLIENT_SECRET[0m, [36mHOST_URL[0m, [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, and [36mAWS_BUCKET[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mEvent Count (4.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "events"[0m
+  [1m[36mEvent Load (0.5ms)[0m  [1m[34mSELECT "events".* FROM "events" ORDER BY "events"."start_time" ASC LIMIT $1[0m  [["LIMIT", 5]]
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:21:20 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.9ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 42.4ms | Allocations: 9242)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 48.5ms | Allocations: 10152)
+  Rendered events/_event_list.html.erb (Duration: 0.1ms | Allocations: 9)
+  Rendered events/index.html.erb within layouts/application (Duration: 50.0ms | Allocations: 10291)
+  Rendered shared/_navbar.html.erb (Duration: 44.3ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.6ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.1ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 565.5ms | Allocations: 17670)
+Completed 200 OK in 649ms (Views: 566.3ms | ActiveRecord: 1.5ms | Allocations: 18341)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:22:13 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.7ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 30.1ms | Allocations: 9239)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 45.1ms | Allocations: 10141)
+  Rendered events/_event_list.html.erb (Duration: 0.0ms | Allocations: 9)
+  Rendered events/index.html.erb within layouts/application (Duration: 46.4ms | Allocations: 10280)
+  Rendered shared/_navbar.html.erb (Duration: 56.7ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.8ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.9ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 553.4ms | Allocations: 17633)
+Completed 200 OK in 629ms (Views: 553.9ms | ActiveRecord: 1.5ms | Allocations: 18294)
+
+
+Started GET "/home" for 172.17.0.1 at 2026-09-01 18:23:13 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/home"):
+  
+Started GET "/photos" for 172.17.0.1 at 2026-09-01 18:23:16 +0000
+Processing by PhotosController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering photos/index.html.erb within layouts/application
+  [1m[36mPhoto Load (5.3ms)[0m  [1m[34mSELECT "photos".* FROM "photos" ORDER BY "photos"."id" DESC[0m
+  ↳ app/views/photos/index.html.erb:20
+  Rendered photos/index.html.erb within layouts/application (Duration: 100.3ms | Allocations: 5460)
+  Rendered shared/_navbar.html.erb (Duration: 50.6ms | Allocations: 1147)
+  Rendered shared/_flash.html.erb (Duration: 0.2ms | Allocations: 29)
+  [1m[36mLink Load (1.0ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 6.0ms | Allocations: 1319)
+  Rendered layout layouts/application.html.erb (Duration: 664.1ms | Allocations: 13185)
+Completed 200 OK in 954ms (Views: 661.6ms | ActiveRecord: 14.4ms | Allocations: 16822)
+
+
+[dotenv] Set [36mGOOGLE_OAUTH_CLIENT_ID[0m, [36mGOOGLE_OAUTH_CLIENT_SECRET[0m, [36mHOST_URL[0m, [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, and [36mAWS_BUCKET[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEvent Create (5.2ms)[0m  [1m[32mINSERT INTO "events" ("name", "created_at", "updated_at", "passcode", "start_time", "end_time", "location", "description", "flyer_image_data", "series_id", "series_position", "recurrence_note") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["name", "Test Event 1"], ["created_at", "2026-09-01 18:24:37.069641"], ["updated_at", "2026-09-01 18:24:37.069641"], ["passcode", nil], ["start_time", "2026-09-10 17:00:00"], ["end_time", nil], ["location", "Room 0"], ["description", nil], ["flyer_image_data", nil], ["series_id", nil], ["series_position", nil], ["recurrence_note", nil]]
+  [1m[36mTRANSACTION (2.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEvent Create (0.7ms)[0m  [1m[32mINSERT INTO "events" ("name", "created_at", "updated_at", "passcode", "start_time", "end_time", "location", "description", "flyer_image_data", "series_id", "series_position", "recurrence_note") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["name", "Test Event 2"], ["created_at", "2026-09-01 18:24:37.097498"], ["updated_at", "2026-09-01 18:24:37.097498"], ["passcode", nil], ["start_time", "2026-09-10 18:00:00"], ["end_time", nil], ["location", "Room 1"], ["description", nil], ["flyer_image_data", nil], ["series_id", nil], ["series_position", nil], ["recurrence_note", nil]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEvent Create (0.6ms)[0m  [1m[32mINSERT INTO "events" ("name", "created_at", "updated_at", "passcode", "start_time", "end_time", "location", "description", "flyer_image_data", "series_id", "series_position", "recurrence_note") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["name", "Test Event 3"], ["created_at", "2026-09-01 18:24:37.106537"], ["updated_at", "2026-09-01 18:24:37.106537"], ["passcode", nil], ["start_time", "2026-09-10 19:00:00"], ["end_time", nil], ["location", "Room 2"], ["description", nil], ["flyer_image_data", nil], ["series_id", nil], ["series_position", nil], ["recurrence_note", nil]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEvent Create (0.5ms)[0m  [1m[32mINSERT INTO "events" ("name", "created_at", "updated_at", "passcode", "start_time", "end_time", "location", "description", "flyer_image_data", "series_id", "series_position", "recurrence_note") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["name", "Test Event 4"], ["created_at", "2026-09-01 18:24:37.114767"], ["updated_at", "2026-09-01 18:24:37.114767"], ["passcode", nil], ["start_time", "2026-09-10 20:00:00"], ["end_time", nil], ["location", "Room 3"], ["description", nil], ["flyer_image_data", nil], ["series_id", nil], ["series_position", nil], ["recurrence_note", nil]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEvent Create (0.5ms)[0m  [1m[32mINSERT INTO "events" ("name", "created_at", "updated_at", "passcode", "start_time", "end_time", "location", "description", "flyer_image_data", "series_id", "series_position", "recurrence_note") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["name", "Solo Meetup"], ["created_at", "2026-09-01 18:24:37.121391"], ["updated_at", "2026-09-01 18:24:37.121391"], ["passcode", nil], ["start_time", "2026-09-18 17:00:00"], ["end_time", nil], ["location", "Park"], ["description", nil], ["flyer_image_data", nil], ["series_id", nil], ["series_position", nil], ["recurrence_note", nil]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mEvent Count (3.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "events"[0m
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:24:47 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.7ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.6ms | Allocations: 212)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.3ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 34.7ms | Allocations: 9538)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 67.6ms | Allocations: 16324)
+  Rendered events/_event_card.html.erb (Duration: 87.9ms | Allocations: 604)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.7ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 104.6ms | Allocations: 1332)
+  Rendered events/index.html.erb within layouts/application (Duration: 173.6ms | Allocations: 17788)
+  Rendered shared/_navbar.html.erb (Duration: 45.9ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.4ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 672.4ms | Allocations: 25141)
+Completed 200 OK in 743ms (Views: 670.9ms | ActiveRecord: 3.2ms | Allocations: 25926)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:25:35 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.6ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 2.4ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 34.0ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 40.2ms | Allocations: 10500)
+  Rendered events/_event_card.html.erb (Duration: 0.4ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 4.1ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 46.1ms | Allocations: 11371)
+  Rendered shared/_navbar.html.erb (Duration: 40.5ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.8ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 5.1ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 568.4ms | Allocations: 18678)
+Completed 200 OK in 642ms (Views: 568.6ms | ActiveRecord: 1.4ms | Allocations: 19339)
+
+
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:27:26 +0000
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.9ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.8ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 35.0ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 39.9ms | Allocations: 10500)
+  Rendered events/_event_card.html.erb (Duration: 0.7ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 5.1ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 46.8ms | Allocations: 11371)
+  Rendered shared/_navbar.html.erb (Duration: 39.7ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (1.1ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 5.1ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 4429.7ms | Allocations: 30695)
+Completed 200 OK in 4501ms (Views: 4429.6ms | ActiveRecord: 2.0ms | Allocations: 31364)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:27:34 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.7ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.4ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.7ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.3ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 66.7ms | Allocations: 9529)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 76.8ms | Allocations: 10571)
+  Rendered events/_event_card.html.erb (Duration: 0.5ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.4ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 5.1ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 83.4ms | Allocations: 11442)
+  Rendered shared/_navbar.html.erb (Duration: 44.8ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 5.9ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 634.4ms | Allocations: 18834)
+Completed 200 OK in 761ms (Views: 635.9ms | ActiveRecord: 1.4ms | Allocations: 19496)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:28:12 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.5ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.6ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 38.5ms | Allocations: 9461)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 43.9ms | Allocations: 10512)
+  Rendered events/_event_card.html.erb (Duration: 0.6ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.4ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 4.6ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 50.0ms | Allocations: 11383)
+  Rendered shared/_navbar.html.erb (Duration: 38.4ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.2ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 520.7ms | Allocations: 18732)
+Completed 200 OK in 600ms (Views: 521.2ms | ActiveRecord: 1.3ms | Allocations: 19400)
+
+
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:29:10 +0000
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.5ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.7ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.4ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 34.6ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 39.5ms | Allocations: 10500)
+  Rendered events/_event_card.html.erb (Duration: 0.4ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 4.6ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 45.9ms | Allocations: 11372)
+  Rendered shared/_navbar.html.erb (Duration: 53.1ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.2ms | Allocations: 20)
+  [1m[36mLink Load (1.1ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 6.1ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 4422.0ms | Allocations: 31075)
+Completed 200 OK in 4494ms (Views: 4422.1ms | ActiveRecord: 1.5ms | Allocations: 31744)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:29:19 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.4ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.6ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 30.7ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 34.8ms | Allocations: 10500)
+  Rendered events/_event_card.html.erb (Duration: 0.5ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 4.1ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 40.2ms | Allocations: 11371)
+  Rendered shared/_navbar.html.erb (Duration: 56.7ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.3ms | Allocations: 20)
+  [1m[36mLink Load (0.9ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 5.6ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 591.2ms | Allocations: 18771)
+Completed 200 OK in 660ms (Views: 591.7ms | ActiveRecord: 1.3ms | Allocations: 19435)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:29:34 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.7ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.3ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 27.5ms | Allocations: 9459)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 31.6ms | Allocations: 10501)
+  Rendered events/_event_card.html.erb (Duration: 0.4ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 3.6ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 37.0ms | Allocations: 11372)
+  Rendered shared/_navbar.html.erb (Duration: 43.8ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.8ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.7ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 551.6ms | Allocations: 18723)
+Completed 200 OK in 629ms (Views: 551.9ms | ActiveRecord: 1.5ms | Allocations: 19384)
+
+
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:30:19 +0000
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (1.2ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 1.0ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 28.3ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 33.8ms | Allocations: 10500)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.4ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 4.0ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 39.3ms | Allocations: 11371)
+  Rendered shared/_navbar.html.erb (Duration: 45.1ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (1.4ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 5.6ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 565.9ms | Allocations: 18721)
+Completed 200 OK in 651ms (Views: 566.5ms | ActiveRecord: 2.6ms | Allocations: 19390)
+
+
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:31:19 +0000
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.5ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.5ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 33.6ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 40.1ms | Allocations: 10500)
+  Rendered events/_event_card.html.erb (Duration: 1.1ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 5.0ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 46.8ms | Allocations: 11371)
+  Rendered shared/_navbar.html.erb (Duration: 41.4ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.6ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.4ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 4169.1ms | Allocations: 29775)
+Completed 200 OK in 4243ms (Views: 4169.8ms | ActiveRecord: 1.2ms | Allocations: 30444)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:31:35 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.9ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.8ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.4ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 43.1ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 48.7ms | Allocations: 10500)
+  Rendered events/_event_card.html.erb (Duration: 0.6ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 4.8ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 55.0ms | Allocations: 11371)
+  Rendered shared/_navbar.html.erb (Duration: 40.1ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.2ms | Allocations: 20)
+  [1m[36mLink Load (0.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.8ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 542.0ms | Allocations: 18770)
+Completed 200 OK in 624ms (Views: 542.4ms | ActiveRecord: 1.6ms | Allocations: 19431)
+
+
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:33:09 +0000
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (1.3ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 11.1ms | Allocations: 454)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.5ms | Allocations: 196)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 1.3ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 71.2ms | Allocations: 10492)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 97.8ms | Allocations: 11945)
+  Rendered events/_event_card.html.erb (Duration: 10.6ms | Allocations: 480)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 35.2ms | Allocations: 1331)
+  Rendered events/index.html.erb within layouts/application (Duration: 165.5ms | Allocations: 13822)
+  Rendered shared/_navbar.html.erb (Duration: 63.3ms | Allocations: 1387)
+  Rendered shared/_flash.html.erb (Duration: 9.9ms | Allocations: 172)
+  [1m[36mLink Load (1.6ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 16.2ms | Allocations: 1797)
+  Rendered layout layouts/application.html.erb (Duration: 4610.8ms | Allocations: 34123)
+Completed 200 OK in 4717ms (Views: 4629.5ms | ActiveRecord: 2.8ms | Allocations: 35549)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:33:18 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.6ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.3ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 33.2ms | Allocations: 9457)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 38.9ms | Allocations: 10499)
+  Rendered events/_event_card.html.erb (Duration: 0.5ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.4ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.4ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.4ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 5.2ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 45.9ms | Allocations: 11370)
+  Rendered shared/_navbar.html.erb (Duration: 53.6ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.8ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 5.3ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 584.9ms | Allocations: 18786)
+Completed 200 OK in 689ms (Views: 586.0ms | ActiveRecord: 1.3ms | Allocations: 19532)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:33:36 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.6ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.4ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 34.4ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 39.3ms | Allocations: 10502)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 4.3ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 45.1ms | Allocations: 11373)
+  Rendered shared/_navbar.html.erb (Duration: 56.0ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.3ms | Allocations: 20)
+  [1m[36mLink Load (0.9ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 6.0ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 580.5ms | Allocations: 18724)
+Completed 200 OK in 659ms (Views: 581.8ms | ActiveRecord: 1.5ms | Allocations: 19386)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:34:53 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (1.6ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.3ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 32.0ms | Allocations: 9459)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 38.9ms | Allocations: 10501)
+  Rendered events/_event_card.html.erb (Duration: 0.5ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 4.1ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 45.0ms | Allocations: 11372)
+  Rendered shared/_navbar.html.erb (Duration: 37.6ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (1.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.9ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 537.3ms | Allocations: 18724)
+Completed 200 OK in 605ms (Views: 535.7ms | ActiveRecord: 3.3ms | Allocations: 19385)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:35:27 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.6ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.4ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 28.7ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 32.9ms | Allocations: 10500)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 3.7ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 38.1ms | Allocations: 11371)
+  Rendered shared/_navbar.html.erb (Duration: 43.5ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.8ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.6ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 532.5ms | Allocations: 18714)
+Completed 200 OK in 607ms (Views: 532.8ms | ActiveRecord: 1.3ms | Allocations: 19375)
+
+
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:36:34 +0000
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.6ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.5ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 32.8ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 38.3ms | Allocations: 10500)
+  Rendered events/_event_card.html.erb (Duration: 0.4ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 3.8ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 43.6ms | Allocations: 11371)
+  Rendered shared/_navbar.html.erb (Duration: 39.3ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.6ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.5ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 4309.5ms | Allocations: 30523)
+Completed 200 OK in 4384ms (Views: 4310.5ms | ActiveRecord: 1.2ms | Allocations: 31192)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:36:40 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.5ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.6ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.3ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 34.2ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 39.3ms | Allocations: 10500)
+  Rendered events/_event_card.html.erb (Duration: 0.4ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.4ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 4.9ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 45.7ms | Allocations: 11371)
+  Rendered shared/_navbar.html.erb (Duration: 45.4ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.5ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 561.0ms | Allocations: 18805)
+Completed 200 OK in 639ms (Views: 561.6ms | ActiveRecord: 1.2ms | Allocations: 19466)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:37:14 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.5ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.3ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.6ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 30.9ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 35.8ms | Allocations: 10500)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 3.7ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 41.1ms | Allocations: 11371)
+  Rendered shared/_navbar.html.erb (Duration: 49.1ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 5.0ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 571.8ms | Allocations: 18726)
+Completed 200 OK in 651ms (Views: 572.6ms | ActiveRecord: 1.2ms | Allocations: 19387)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:37:49 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.6ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.4ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 29.7ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 34.0ms | Allocations: 10500)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 3.5ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 38.9ms | Allocations: 11371)
+  Rendered shared/_navbar.html.erb (Duration: 43.5ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 3.5ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 550.0ms | Allocations: 18738)
+Completed 200 OK in 625ms (Views: 550.3ms | ActiveRecord: 1.2ms | Allocations: 19399)
+
+
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:38:48 +0000
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.7ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 13.5ms | Allocations: 454)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.6ms | Allocations: 196)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 69.9ms | Allocations: 10491)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 96.2ms | Allocations: 11944)
+  Rendered events/_event_card.html.erb (Duration: 13.7ms | Allocations: 480)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 38.7ms | Allocations: 1331)
+  Rendered events/index.html.erb within layouts/application (Duration: 166.0ms | Allocations: 13823)
+  Rendered shared/_navbar.html.erb (Duration: 48.2ms | Allocations: 1384)
+  Rendered shared/_flash.html.erb (Duration: 13.6ms | Allocations: 172)
+  [1m[36mLink Load (1.0ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 19.3ms | Allocations: 1797)
+  Rendered layout layouts/application.html.erb (Duration: 720.4ms | Allocations: 22855)
+Completed 200 OK in 825ms (Views: 738.4ms | ActiveRecord: 1.7ms | Allocations: 24280)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:38:50 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.5ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.4ms | Allocations: 186)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.5ms | Allocations: 53)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 31.4ms | Allocations: 9458)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 35.3ms | Allocations: 10500)
+  Rendered events/_event_card.html.erb (Duration: 0.4ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.2ms | Allocations: 89)
+  Rendered events/_event_card.html.erb (Duration: 0.3ms | Allocations: 89)
+  Rendered events/_event_list.html.erb (Duration: 4.2ms | Allocations: 739)
+  Rendered events/index.html.erb within layouts/application (Duration: 40.7ms | Allocations: 11371)
+  Rendered shared/_navbar.html.erb (Duration: 43.2ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 3.8ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 535.4ms | Allocations: 18684)
+Completed 200 OK in 611ms (Views: 535.9ms | ActiveRecord: 1.2ms | Allocations: 19430)
+
+
+[dotenv] Set [36mGOOGLE_OAUTH_CLIENT_ID[0m, [36mGOOGLE_OAUTH_CLIENT_SECRET[0m, [36mHOST_URL[0m, [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, and [36mAWS_BUCKET[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mEvent Delete All (9.9ms)[0m  [1m[31mDELETE FROM "events"[0m
+  [1m[36mEvent Count (1.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "events"[0m
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:40:44 +0000
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.4ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 39.7ms | Allocations: 9239)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 43.7ms | Allocations: 10141)
+  Rendered events/_event_list.html.erb (Duration: 0.1ms | Allocations: 9)
+  Rendered events/index.html.erb within layouts/application (Duration: 45.5ms | Allocations: 10280)
+  Rendered shared/_navbar.html.erb (Duration: 44.8ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.9ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 6.3ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 519.9ms | Allocations: 17638)
+Completed 200 OK in 597ms (Views: 520.3ms | ActiveRecord: 1.3ms | Allocations: 18307)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:40:47 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.5ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 33.7ms | Allocations: 9239)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 37.8ms | Allocations: 10141)
+  Rendered events/_event_list.html.erb (Duration: 0.0ms | Allocations: 9)
+  Rendered events/index.html.erb within layouts/application (Duration: 39.3ms | Allocations: 10280)
+  Rendered shared/_navbar.html.erb (Duration: 41.2ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.8ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.7ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 568.5ms | Allocations: 17635)
+Completed 200 OK in 646ms (Views: 568.7ms | ActiveRecord: 1.4ms | Allocations: 18296)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:40:54 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.5ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 33.1ms | Allocations: 9239)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 37.1ms | Allocations: 10141)
+  Rendered events/_event_list.html.erb (Duration: 0.1ms | Allocations: 9)
+  Rendered events/index.html.erb within layouts/application (Duration: 38.7ms | Allocations: 10280)
+  Rendered shared/_navbar.html.erb (Duration: 40.3ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 5.4ms | Allocations: 1250)
+  Rendered layout layouts/application.html.erb (Duration: 502.9ms | Allocations: 17635)
+Completed 200 OK in 578ms (Views: 503.5ms | ActiveRecord: 1.2ms | Allocations: 18296)
+
+
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:41:43 +0000
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (1.1ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 15.7ms | Allocations: 454)
+  Rendered events/_calendar_day.html.erb (Duration: 0.3ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 87.9ms | Allocations: 10269)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 121.4ms | Allocations: 11565)
+  Rendered events/_event_list.html.erb (Duration: 11.8ms | Allocations: 190)
+  Rendered events/index.html.erb within layouts/application (Duration: 171.3ms | Allocations: 12299)
+  Rendered shared/_navbar.html.erb (Duration: 62.4ms | Allocations: 1380)
+  Rendered shared/_flash.html.erb (Duration: 13.5ms | Allocations: 172)
+  [1m[36mLink Load (0.8ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 17.7ms | Allocations: 1797)
+  Rendered layout layouts/application.html.erb (Duration: 4857.8ms | Allocations: 33932)
+Completed 200 OK in 4972ms (Views: 4877.5ms | ActiveRecord: 1.9ms | Allocations: 35356)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:41:50 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.5ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 36.2ms | Allocations: 9239)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 40.8ms | Allocations: 10141)
+  Rendered events/_event_list.html.erb (Duration: 0.0ms | Allocations: 8)
+  Rendered events/index.html.erb within layouts/application (Duration: 42.9ms | Allocations: 10279)
+  Rendered shared/_navbar.html.erb (Duration: 44.1ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.8ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.8ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 542.9ms | Allocations: 17675)
+Completed 200 OK in 618ms (Views: 543.6ms | ActiveRecord: 1.3ms | Allocations: 18423)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:41:56 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.5ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 31.1ms | Allocations: 9239)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 35.3ms | Allocations: 10141)
+  Rendered events/_event_list.html.erb (Duration: 0.0ms | Allocations: 8)
+  Rendered events/index.html.erb within layouts/application (Duration: 36.7ms | Allocations: 10279)
+  Rendered shared/_navbar.html.erb (Duration: 42.3ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.2ms | Allocations: 20)
+  [1m[36mLink Load (0.8ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.3ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 504.9ms | Allocations: 17594)
+Completed 200 OK in 576ms (Views: 505.7ms | ActiveRecord: 1.3ms | Allocations: 18255)
+
+
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:42:49 +0000
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.7ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.2ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 47.0ms | Allocations: 9239)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 52.2ms | Allocations: 10141)
+  Rendered events/_event_list.html.erb (Duration: 0.0ms | Allocations: 8)
+  Rendered events/index.html.erb within layouts/application (Duration: 53.5ms | Allocations: 10279)
+  Rendered shared/_navbar.html.erb (Duration: 55.1ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.1ms | Allocations: 1250)
+  Rendered layout layouts/application.html.erb (Duration: 570.8ms | Allocations: 17653)
+Completed 200 OK in 646ms (Views: 571.3ms | ActiveRecord: 1.4ms | Allocations: 18322)
+
+
+Started GET "/events" for 127.0.0.1 at 2026-09-01 18:42:51 +0000
+Processing by EventsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.6ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.3ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 39.1ms | Allocations: 9238)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 44.1ms | Allocations: 10140)
+  Rendered events/_event_list.html.erb (Duration: 0.0ms | Allocations: 8)
+  Rendered events/index.html.erb within layouts/application (Duration: 45.5ms | Allocations: 10278)
+  Rendered shared/_navbar.html.erb (Duration: 41.6ms | Allocations: 1077)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.7ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.7ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 528.1ms | Allocations: 17637)
+Completed 200 OK in 598ms (Views: 528.7ms | ActiveRecord: 1.3ms | Allocations: 18306)
+
+
+Started GET "/events" for 172.17.0.1 at 2026-09-01 18:46:42 +0000
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (0.7ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."start_time" BETWEEN $1 AND $2 ORDER BY "events"."start_time" ASC[0m  [["start_time", "2026-09-01"], ["start_time", "2026-09-30"]]
+  ↳ app/views/events/_month_calendar_panel.html.erb:4
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.1ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered events/_calendar_day.html.erb (Duration: 0.0ms | Allocations: 11)
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 29.9ms | Allocations: 9239)
+  Rendered events/_month_calendar_panel.html.erb (Duration: 34.2ms | Allocations: 10141)
+  Rendered events/_event_list.html.erb (Duration: 0.1ms | Allocations: 8)
+  Rendered events/index.html.erb within layouts/application (Duration: 35.7ms | Allocations: 10279)
+  Rendered shared/_navbar.html.erb (Duration: 41.2ms | Allocations: 1081)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 20)
+  [1m[36mLink Load (0.8ms)[0m  [1m[34mSELECT "links".* FROM "links"[0m
+  ↳ app/views/shared/_footer.html.erb:12
+  Rendered shared/_footer.html.erb (Duration: 4.1ms | Allocations: 1246)
+  Rendered layout layouts/application.html.erb (Duration: 511.1ms | Allocations: 17620)
+Completed 200 OK in 583ms (Views: 511.3ms | ActiveRecord: 1.4ms | Allocations: 18452)
+
+
+[dotenv] Set [36mGOOGLE_OAUTH_CLIENT_ID[0m, [36mGOOGLE_OAUTH_CLIENT_SECRET[0m, [36mHOST_URL[0m, [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, and [36mAWS_BUCKET[0m
+[dotenv] Loaded [33m.env[0m

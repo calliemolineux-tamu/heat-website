@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:12
+    environment:
+      POSTGRES_USER: cold_app
+      POSTGRES_PASSWORD: cold_password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cold_app"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    image: ruby:3.1.2
+    working_dir: /app
+    command: >
+      bash -c "apt-get update -qq &&
+      apt-get install -y -qq --no-install-recommends libpq-dev &&
+      gem install bundler -v 2.3.14 &&
+      bundle install &&
+      rm -f tmp/pids/server.pid &&
+      bundle exec rails db:prepare &&
+      bundle exec rails server -b 0.0.0.0 -p 3000"
+    volumes:
+      - .:/app
+      - bundle:/usr/local/bundle
+    ports:
+      - "3000:3000"
+    env_file: .env
+    environment:
+      DATABASE_HOST: db
+      RAILS_ENV: development
+    depends_on:
+      db:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+
+volumes:
+  pgdata:
+  bundle:

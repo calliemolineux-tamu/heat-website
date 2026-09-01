@@ -1,4 +1,4 @@
-<main class="container-full" data-controller="modal">
+<main class="container-full" data-controller="modal day-events">
   <header class="header events-header">
     <h1>EVENTS</h1>
     <% create_link = create_link_for(@role) %>
@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div id="day-events-modal" class="modal" data-controller="day-events" data-day-events-target="dialog"
+  <div id="day-events-modal" class="modal" data-day-events-target="dialog"
        data-action="click->day-events#closeBackground">
     <div class="modal-content">
       <div class="modal-header">
