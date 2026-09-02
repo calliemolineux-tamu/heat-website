@@ -1,28 +1,41 @@
-/* Base gallery styles */
+/* Base gallery styles - Pinterest-style masonry via CSS multi-column. Each photo
+   keeps its native aspect ratio; the browser fits as many ~18rem columns as the
+   width allows (down to 1 on mobile) with no media queries. */
 .gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem; /* Adjust spacing between items as needed */
+  columns: 18rem;
+  column-gap: 1rem;
 
-  @include media(mobile) {
-    grid-template-columns: repeat(1, 1fr);
+  /* Direct children are the <turbo-frame> tiles (one per photo). Keep each tile
+     whole within a column and add the vertical gutter here (column-gap only
+     spaces columns, not stacked items). */
+  > * {
+    display: block;
+    width: 100%;
+    margin: 0 0 1rem;
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid; /* Safari */
   }
 
-    /* Gallery columns */
+  /* The inline "add photo" form spans the full width above the columns instead
+     of being squeezed into one. */
+  &#photos > turbo-frame#new_photo:not(:empty) {
+    column-span: all;
+  }
+
+    /* Gallery columns (only used by the orphaned photos/gallery.html.erb) */
   &__column {
     display: flex;
     flex-direction: column;
     gap: 16px; /* Adjust gap between items */
     flex: 1; /* Equal width columns */
   }
-  
+
   /* Gallery items */
   &__item {
     /* Optional styles for items */
     position: relative;
     border-radius: var(--border-radius);
     overflow: hidden;
-    height: 100%;
     width: 100%;
 
     .fullscreen-button {
@@ -86,22 +99,53 @@
       opacity: 1;
   }
 
+  // The add/edit photo form reuses .gallery__item / .gallery__content. It spans
+  // the full masonry width (column-span: all above), so keep it to a sane form
+  // width and stop the preview image from blowing up.
+  &__item[data-controller="photo"] {
+      max-width: 34rem;
+      margin-inline: auto;
+
+      .gallery__image {
+          max-height: 20rem;
+          width: auto;
+          margin-inline: auto;
+          object-fit: contain;
+      }
+  }
+
+  // .gallery__content is the hover-reveal overlay on a saved photo tile; when it
+  // instead carries the form it must stay visible and in normal flow - there's
+  // no underlying image to hover to reveal it.
+  &__item[data-controller="photo"] &__content {
+      position: static;
+      opacity: 1;
+      background-color: transparent;
+
+      > * {
+          transform: none;
+      }
+  }
+
   &__content h1 {
       color: var(--color-tertiary);
-      font-size: var(--font-size-xxxxl);
+      font-size: var(--font-size-xl);
       font-family: 'Lato';
       margin-bottom: 10px;
       text-align: center;
       padding-left: 10%;
       padding-right: 10%;
+      overflow-wrap: anywhere;
   }
 
   &__content p {
       color: var(--color-primary-rotate);
-      font-size: var(--font-size-xl);
+      font-size: var(--font-size-m);
       font-family: 'Lato';
+      text-align: center;
       padding-left: 10%;
       padding-right: 10%;
+      overflow-wrap: anywhere;
   }
 
   &__content > *{

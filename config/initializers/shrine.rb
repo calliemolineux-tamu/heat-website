@@ -16,20 +16,24 @@ if Rails.env.test?
 elsif ENV['R2_BUCKET'].present?
   require 'shrine/storage/s3'
 
-  # Cloudflare R2 speaks the S3 API. Notes specific to R2:
+  # Cloudflare R2 speaks the S3 API, but not all of it. R2-specific notes:
   #   * region is ignored by R2 - "auto" is Cloudflare's recommended value
   #   * R2_ENDPOINT is the S3 API host: https://<ACCOUNT_ID>.r2.cloudflarestorage.com
   #   * force_path_style is required (R2 does not do virtual-host-style buckets)
   #   * no :public / ACL option - R2 has no per-object ACLs; make the bucket
   #     publicly readable in the Cloudflare dashboard instead (r2.dev subdomain
   #     or a custom domain) and point R2_PUBLIC_URL at that.
+  #   * copy_options: {} - Shrine's default copy sends `x-amz-tagging-directive`
+  #     when promoting a cached upload to permanent storage; R2 returns 501
+  #     NotImplemented for it, so clear it (object tagging isn't supported on R2).
   s3_options = {
     access_key_id: ENV.fetch('R2_ACCESS_KEY_ID'),
     secret_access_key: ENV.fetch('R2_SECRET_ACCESS_KEY'),
     region: 'auto',
     bucket: ENV.fetch('R2_BUCKET'),
     endpoint: ENV.fetch('R2_ENDPOINT'),
-    force_path_style: true
+    force_path_style: true,
+    copy_options: {}
   }
 
   Shrine.storages = {
