@@ -108,9 +108,9 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
+        format.html { redirect_to @event, notice: 'Event created successfully.' }
         format.turbo_stream do
-          flash.now[:notice] = 'Event was successfully created.'
+          flash.now[:notice] = 'Event created successfully.'
           load_calendar_month_for(@event)
         end
       else

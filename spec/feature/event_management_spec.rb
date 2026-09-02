@@ -107,8 +107,11 @@ RSpec.feature 'Event Management', type: :feature do
     expect(page).to have_content(event_name)
   end
 
+  # Blank required fields are caught client-side by required_field_controller.js
+  # before the form ever submits to the server, so this never reaches (and never
+  # shows) the model's "Name can't be blank" validation message.
   def expect_blank_event_name_error
-    expect(page).to have_content("Name can't be blank")
+    expect(page).to have_content('Name is missing')
   end
 
   def expect_event_update_success(event_name)
