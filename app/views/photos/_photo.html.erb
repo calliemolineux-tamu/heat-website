@@ -1,25 +1,26 @@
-<%= turbo_frame_tag dom_id(photo) do %>
-    <div class="gallery__item">
-      <%= image_tag photo.image_url, alt: photo.description, class: "gallery__image" %>
+<%# Wrapped in <turbo-frame id="photo_<id>"> by the caller (index, gallery, and the
+    create/update turbo streams) so an inline edit only swaps this one tile. %>
+<div class="gallery__item">
+  <%= image_tag photo.image_url, alt: photo.description, class: "gallery__image",
+                loading: "lazy", decoding: "async" %>
 
-      <div class="gallery__content">
-        <button type="button" class="fullscreen-button" data-action="click->fullscreen#open" data-photo-url="<%= photo.image_url %>">
-          <%= image_tag 'fullscreen-icon.svg', alt: 'View Full Screen', width: '24', height: '24' %>
-        </button>
+  <div class="gallery__content">
+    <button type="button" class="fullscreen-button" data-action="click->fullscreen#open" data-photo-url="<%= photo.image_url %>">
+      <%= image_tag 'fullscreen-icon.svg', alt: 'View Full Screen', width: '24', height: '24' %>
+    </button>
 
-        <h1><%= photo.title %></h1>
-        <p><%= photo.description %></p>
+    <h1><%= photo.title %></h1>
+    <p><%= photo.description %></p>
 
-        <% if @role == 'admin' %>
-          <div class="gallery__content-links">
-            <%= link_to edit_photo_path(photo), class: 'photo__table-button edit', data: { turbo_frame: dom_id(photo) } do %>
-              <%= image_tag 'pencil-svgrepo-com.svg', alt: 'Edit Photo', width: '32', height: '32' %>
-            <% end %>
-            <%= link_to photo_path(photo), class: 'photo__table-button trash', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
-              <%= image_tag 'trash-blank-svgrepo-com.svg', alt: 'Delete Photo', width: '32', height: '32' %>
-            <% end %>
-          </div>
+    <% if @role == 'admin' %>
+      <div class="gallery__content-links">
+        <%= link_to edit_photo_path(photo), class: 'photo__table-button edit', data: { turbo_frame: dom_id(photo) } do %>
+          <%= image_tag 'pencil-svgrepo-com.svg', alt: 'Edit Photo', width: '32', height: '32' %>
+        <% end %>
+        <%= link_to photo_path(photo), class: 'photo__table-button trash', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
+          <%= image_tag 'trash-blank-svgrepo-com.svg', alt: 'Delete Photo', width: '32', height: '32' %>
         <% end %>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
+</div>

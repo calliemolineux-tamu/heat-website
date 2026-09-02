@@ -1,10 +1,11 @@
-<div class="gallery__item">
+<div class="gallery__item" data-controller="photo">
   <%= image_tag(
-    photo.image_url.present? ? photo.image_url : 'placeholder.jpg',
+    photo.image_url.presence || 'placeholder.jpg',
     alt: photo.description || 'No description',
-    class: 'gallery__image'
+    class: 'gallery__image',
+    data: { photo_target: 'preview' }
   ) %>
-  <%= simple_form_for @photo, html: { class: "photo form gallery__content", multipart: true, data: { turbo: true, controller: 'photo' } } do |form| %>
+  <%= simple_form_for @photo, html: { id: 'photo-form', class: "photo form gallery__content", multipart: true, data: { turbo: true } } do |form| %>
 
       <div class="">
         <%= form.input :title %>
@@ -16,17 +17,17 @@
         <%= form.label :image, class: 'gallery__item-file_label' do %>
           <%= image_tag 'upload-icon.svg', alt: 'Upload Photo', class: 'upload-icon' %>
           <span>Select Photo</span>
-          <%= form.file_field :image, class: 'file-input' %>
+          <%= form.file_field :image, class: 'file-input',
+                               data: { photo_target: 'input', action: 'change->photo#preview' } %>
         <% end %>
       </div>
       <div class="gallery__content-links">
         <%= button_tag(type: 'submit', class: 'photo__table-button confirm') do %>
           <%= image_tag 'check-svgrepo-com.svg', class: 'photo__table-svg', alt: 'Save Photo', width: '32', height: '32' %>
         <% end %>
-        <%= button_to photos_path, class: 'photo__table-button cancel', data: { action: 'click->photo#closeForm' } do %>
+        <%= button_tag(type: 'button', class: 'photo__table-button cancel', data: { action: 'click->photo#closeForm' }) do %>
           <%= image_tag 'cancel-close-delete-svgrepo-com.svg', class: 'photo__table-svg', alt: 'Back to photos', width: '32', height: '32' %>
         <% end %>
       </div>
   <% end %>
 </div>
-
