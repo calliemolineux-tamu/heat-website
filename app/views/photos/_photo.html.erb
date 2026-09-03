@@ -12,6 +12,14 @@
     <h1><%= photo.title %></h1>
     <p><%= photo.description %></p>
 
+    <% if photo.photo_tags.any? %>
+      <ul class="gallery__tags">
+        <% photo.photo_tags.each do |photo_tag| %>
+          <li class="gallery__tag"><%= Photo::TAG_OPTIONS[photo_tag.tag] %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
     <% if @role == 'admin' %>
       <div class="gallery__content-links">
         <%= link_to edit_photo_path(photo), class: 'photo__table-button edit', data: { turbo_frame: dom_id(photo) } do %>

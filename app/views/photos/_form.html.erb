@@ -13,6 +13,17 @@
       <div class="">
         <%= form.input :description %>
       </div>
+      <fieldset class="photo-form__tags">
+        <legend>Feature on home page</legend>
+        <%= hidden_field_tag 'photo[tag_names][]', '' %>
+        <% Photo::TAG_OPTIONS.each do |value, label| %>
+          <label class="photo-form__tag">
+            <%= check_box_tag 'photo[tag_names][]', value, @photo.tag_names.include?(value),
+                              id: "photo_tag_#{value}" %>
+            <%= label %>
+          </label>
+        <% end %>
+      </fieldset>
       <div class="gallery__item-file_field">
         <%= form.label :image, class: 'gallery__item-file_label' do %>
           <%= image_tag 'upload-icon.svg', alt: 'Upload Photo', class: 'upload-icon' %>
