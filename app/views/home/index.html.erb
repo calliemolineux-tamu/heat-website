@@ -2,13 +2,9 @@
   <div class="home">
     <h2 class="home__header">H.E.A.T.</h2>
     <h3 class="home__subheader">Human Environmental Animal Team</h3>
-    <%= render partial: 'shared/carousel', locals: { 
-      images: ['carousel1slide1.jpg', 'carousel1slide2.jpg', 'carousel1slide3.jpg', 'carousel1slide4.jpg'], 
-      title: "Recent H.E.A.T. Activities", 
-      descriptions: ["H.E.A.T. at Texas Wolfdog Project & Shelter", "H.E.A.T. members receiving a grant from Aggie Green Fund and kicking off The Period Project", "Unbound Now presenting human trafficking bystander training to H.E.A.T. members", "Period Project presenting their work at SGA Open Forum"] } 
-    %>
+    <%= render partial: 'shared/carousel', locals: @carousels[0].slice(:images, :title, :descriptions) %>
     <p>
-      Howdy! H.E.A.T. is a non-profit 501(c)(3) student service organization dedicated to improving
+      Howdy! H.E.A.T. is a non-profit student service organization dedicated to improving
       humanitarian, environmental, and animal welfare issues through <em>positive activism</em>.
     </p>
     <br>
@@ -17,11 +13,7 @@
         "H.E.A.T. never demonizes, H.E.A.T. always rises."
       </h3>
     </div>
-    <%= render partial: 'shared/carousel', locals: { 
-      images: ['carousel2slide1.jpg', 'carousel2slide2.jpg', 'carousel2slide3.jpg', 'carousel2slide4.jpg'], 
-      title: "H.E.A.T. in Action", 
-      descriptions: ["H.E.A.T. members helping to build medical facilities for underserved communities with TAMU BUILD", "H.E.A.T. chapters from TAMU and TXST collaborating on cleaning a local stream in San Marcos, TX", "H.E.A.T. members collaborating with Texas Ramp Project to build a ramp for a local family needing wheelchair accessibility to their home", "H.E.A.T. members helping TMR Rescue staff with fixing and cleaning equine enclosures"] } 
-    %>
+    <%= render partial: 'shared/carousel', locals: @carousels[1].slice(:images, :title, :descriptions) %>
     <p>
       Even as our chapter continues to grow, there remains a place for everyone in H.E.A.T. at Texas
       A&M University! H.E.A.T. is a dedicated group focused on creating positive change through
@@ -31,11 +23,7 @@
       at food banks, cleaning up local and beach litter, and volunteering with various animal rescues
       and sanctuaries.
     </p>
-    <%= render partial: 'shared/carousel', locals: { 
-      images: ['carousel3slide1.jpg', 'carousel3slide2.jpg', 'carousel3slide3.jpg'], 
-      title: "H.E.A.T. at Social Events", 
-      descriptions: ["Painting social at Aggie Park to meet prospective members!", "H.E.A.T. members participating in our quarterly street cleanups at our adopted street", "H.E.A.T. members watching the total solar eclipse together"] } 
-    %>
+    <%= render partial: 'shared/carousel', locals: @carousels[2].slice(:images, :title, :descriptions) %>
     <h3 class="home__section-header">Bottom-up organization</h3>
     <p>
       At H.E.A.T., we want to volunteer at places that matter to YOU! We encourage initiative and are
@@ -63,7 +51,7 @@
         Join us!
       </h3>
       <p>
-        <strong>Membership Dues:</strong> $20/semester for new members, $15/semester for returning members.
+        <strong>Membership Dues:</strong> $25/semester for new members, $15/semester for returning members.
         <br>
         We accept members the first quarter of each semester.
         Meeting locations will always be announced on our Instagram and GroupMe.

@@ -120,3 +120,30 @@
 turbo-frame:empty {
     display: none;
   }
+
+// "Feature on home page" tag checkboxes on the photo add/edit form.
+.photo-form__tags {
+    border: 1px solid var(--color-light);
+    border-radius: var(--border-radius);
+    padding: var(--space-xs) var(--space-s);
+    margin: var(--space-xs) 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-m);
+
+    legend {
+        font-size: var(--font-size-s);
+        font-weight: 600;
+        color: var(--color-text-header);
+        padding: 0 var(--space-xxs);
+    }
+}
+
+.photo-form__tag {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xxs);
+    font-size: var(--font-size-s);
+    color: var(--color-text-body);
+    cursor: pointer;
+}

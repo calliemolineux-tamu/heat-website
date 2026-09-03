@@ -99,6 +99,26 @@
       opacity: 1;
   }
 
+  // Tag badges shown in the hover overlay (which home-page wheels this photo is on).
+  &__tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      list-style: none;
+      margin: 4px 0 0;
+      padding: 0 10%;
+  }
+
+  &__tag {
+      padding: 2px 8px;
+      border-radius: 999px;
+      background-color: var(--color-tertiary);
+      color: var(--color-secondary);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+  }
+
   // The add/edit photo form reuses .gallery__item / .gallery__content. It spans
   // the full masonry width (column-span: all above), so keep it to a sane form
   // width and stop the preview image from blowing up.
