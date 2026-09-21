@@ -45,6 +45,15 @@
   --color-red:              hsl(356, 87%, 46%);
   --color-red-rotate:       hsl(356, 87%, 56%);
 
+  // Committee colors - deliberately muted/dull (similar saturation & lightness
+  // across all four) so they read as one coherent family on the calendar.
+  // Environmental's hue is kept clear of --color-secondary-rotate's olive-green
+  // accent (hue 105) so the two don't read as the same color.
+  --color-committee-animal:        hsl(28, 45%, 46%);  // dull burnt orange / terracotta
+  --color-committee-environmental: hsl(138, 30%, 38%); // dull leaf green
+  --color-committee-human:         hsl(212, 33%, 46%); // dull slate blue
+  --color-committee-general:       hsl(220, 10%, 52%); // dull neutral grey
+
   // Neutral colors
   --color-white:      hsl(0, 0%, 100%);
   --color-background: hsl(30, 50%, 98%);

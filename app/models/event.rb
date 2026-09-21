@@ -4,6 +4,13 @@
 class Event < ApplicationRecord
   include ImageUploader::Attachment(:flyer_image) # Optional event flyer, via Shrine (same pattern as Photo)
 
+  enum committee: {
+    animal: 'animal',
+    environmental: 'environmental',
+    human: 'human',
+    general: 'general'
+  }, _prefix: true
+
   has_many :attendances, dependent: :destroy
   has_many :users, through: :attendances
   validates :name, presence: true

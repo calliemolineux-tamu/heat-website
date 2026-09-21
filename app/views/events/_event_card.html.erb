@@ -1,6 +1,8 @@
 <%# A single event card in the sortable list. Shared between the events#index list and
     the Turbo Stream response that prepends a newly created event without a page reload. %>
-<div class="event" id="<%= dom_id(event) %>">
+<div class="event" id="<%= dom_id(event) %>" data-committee="<%= event.committee %>">
+  <span class="event__committee-tag event__committee-tag--<%= event.committee %>"><%= event.committee.humanize %></span>
+
   <% if event.flyer_image.present? %>
     <%= image_tag event.flyer_image_url, class: 'event__flyer-thumb', alt: "#{event.name} flyer" %>
   <% end %>

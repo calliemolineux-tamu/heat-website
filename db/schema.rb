@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_08_06_000003) do
+ActiveRecord::Schema[7.0].define(version: 2026_09_21_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_06_000003) do
     t.string "series_id"
     t.integer "series_position"
     t.string "recurrence_note"
+    t.string "committee", default: "general", null: false
     t.index ["series_id"], name: "index_events_on_series_id"
   end
 
