@@ -4,6 +4,7 @@
     <h1>MEMBERS</h1>
   </header>
   <div id="reset-button">
+    <%= link_to 'Export Points (CSV)', export_users_path(format: :csv), class: 'btn btn--secondary', data: { turbo: false } %>
     <%= button_to 'Reset Member Points', reset_points_path, method: :post, data: { turbo_confirm: 'Are you sure you want to update all records?' }, class: 'btn btn--danger' %>
   </div>
   <br>
