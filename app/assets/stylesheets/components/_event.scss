@@ -312,6 +312,14 @@
   background-color: var(--color-primary-bg);
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
+  // The [hidden] attribute's UA-stylesheet "display: none" default loses to this
+  // class's own "display: flex" rule once there's more than one .event on the
+  // page (same-origin specificity ties resolve by source order), so the
+  // committee filter's card.hidden = true had no visible effect without this.
+  &[hidden] {
+    display: none;
+  }
+
   @include media(mobile) {
     padding: 5%;
     width: 100%;
@@ -496,6 +504,45 @@
 
   &[hidden] {
     display: none;
+  }
+}
+
+// Full-page event form (currently just "Edit Event" - "new" is only ever
+// shown inline in the calendar's quick-add modal). Deliberately NOT using the
+// shared .container/.container-full classes: .container is redeclared with
+// conflicting display/padding rules across _merch.scss, _ideas.scss and
+// _showEvent.scss (import order + !important make the winning combination
+// hard to predict), which left this page's form squashed into a narrow,
+// off-center column instead of filling the page.
+.event-form-page {
+  // Card spans the site's standard page width (matches .container's 70rem)
+  // so it doesn't read as a tiny island on a wide desktop screen; the form
+  // itself stays narrower (below) so fields don't stretch unreadably wide.
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: 180px var(--space-m) var(--space-xl); // top padding clears the fixed navbar
+  background-color: var(--color-primary-bg);
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+
+  @include media(tabletAndUp) {
+    padding-right: var(--space-xl);
+    padding-left: var(--space-xl);
+  }
+
+  .event-header,
+  form {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  & > .btn {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    display: table; // shrink-to-fit so centering via auto margins works on an <a>
+    margin-top: var(--space-m);
   }
 }
 

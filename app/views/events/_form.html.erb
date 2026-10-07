@@ -2,7 +2,7 @@
 <%# Editing stays a plain full-page postback (local: true, no turbo_stream views for
     edit/update). Creating is Turbo-enabled so it can be submitted inline from the
     calendar's quick-add modal and get a turbo_stream response back. %>
-<%= form_with(model: @event, local: @event.persisted?, html: { multipart: true }, data: { controller: 'required-field' }) do |form| %>
+<%= form_with(model: @event, local: @event.persisted?, html: { multipart: true }, data: { controller: 'required-field event-points' }) do |form| %>
   <% if @event.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
@@ -22,13 +22,15 @@
   <div class="form-group" id="event_start_time_group">
     <%= form.label :start_time, "Event Start Time" %>
     <%= form.text_field :start_time, value: @event.start_time&.strftime('%Y-%m-%d %H:%M'),
-                         class: 'form-control', required: true, data: { controller: 'datepicker' } %>
+                         class: 'form-control', required: true,
+                         data: { controller: 'datepicker', event_points_target: 'startTime', action: 'change->event-points#recalculate' } %>
   </div>
 
   <div class="form-group" id="event_end_time_group">
     <%= form.label :end_time, "Event End Time (optional)" %>
     <%= form.text_field :end_time, value: @event.end_time&.strftime('%Y-%m-%d %H:%M'),
-                         class: 'form-control', data: { controller: 'datepicker' } %>
+                         class: 'form-control',
+                         data: { controller: 'datepicker', event_points_target: 'endTime', action: 'change->event-points#recalculate' } %>
   </div>
 
   <div class="form-group">
@@ -40,7 +42,14 @@
     <%= form.label :committee %>
     <%= form.select :committee,
                      Event.committees.keys.map { |c| [c.humanize, c] },
-                     {}, class: 'form-control', required: true %>
+                     {}, class: 'form-control', required: true,
+                     data: { event_points_target: 'committee', action: 'change->event-points#recalculate' } %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :points, "Points (optional — auto-calculated from duration if left blank)" %>
+    <%= form.number_field :points, class: 'form-control', min: 1, step: 1,
+                           data: { event_points_target: 'points', action: 'input->event-points#markManual' } %>
   </div>
 
   <% if current_user.role == "admin" %>

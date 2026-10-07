@@ -82,7 +82,7 @@ class EventsController < ApplicationController
   # Strong parameters to prevent mass assignment issues
   def event_params
     params.require(:event).permit(:name, :passcode, :start_time, :end_time, :location, :description, :flyer_image,
-                                   :committee)
+                                   :committee, :points)
   end
 
   # When a calendar day's "+" quick-add link is clicked, prefill the new event's start time

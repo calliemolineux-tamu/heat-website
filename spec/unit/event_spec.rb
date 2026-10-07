@@ -48,4 +48,44 @@ RSpec.describe Event, type: :model do
       expect(event.reload.end_time).to be_nil
     end
   end
+
+  describe 'default points' do
+    it 'defaults to 1 point per hour of duration, rounded to the nearest hour' do
+      event.committee = 'human'
+      event.start_time = Time.zone.parse('2026-08-10 15:00')
+      event.end_time = Time.zone.parse('2026-08-10 18:00')
+      event.save!
+      expect(event.points).to eq(3)
+    end
+
+    it 'rounds a partial-hour duration to the nearest whole hour' do
+      event.committee = 'human'
+      event.start_time = Time.zone.parse('2026-08-10 15:00')
+      event.end_time = Time.zone.parse('2026-08-10 16:40')
+      event.save!
+      expect(event.points).to eq(2)
+    end
+
+    it 'defaults to 1 point for general-committee events regardless of duration' do
+      event.committee = 'general'
+      event.start_time = Time.zone.parse('2026-08-10 15:00')
+      event.end_time = Time.zone.parse('2026-08-10 18:00')
+      event.save!
+      expect(event.points).to eq(1)
+    end
+
+    it 'defaults to 1 point when end_time is missing' do
+      event.committee = 'human'
+      event.end_time = nil
+      event.save!
+      expect(event.points).to eq(1)
+    end
+
+    it 'does not override an explicitly set points value' do
+      event.committee = 'human'
+      event.points = 10
+      event.save!
+      expect(event.points).to eq(10)
+    end
+  end
 end

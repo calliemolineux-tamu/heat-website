@@ -14,6 +14,12 @@ export default class extends Controller {
       altInput: true,
       altFormat: "F j, Y h:i K",
       time_24hr: false,
+      // Dispatched explicitly (rather than relying on flatpickr's own event
+      // sync) so other controllers - e.g. event-points - can reliably react
+      // to picker changes via a plain data-action="change->..." on this input.
+      onChange: () => {
+        this.element.dispatchEvent(new Event("change", { bubbles: true }))
+      },
     })
   }
 

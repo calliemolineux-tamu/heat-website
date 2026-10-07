@@ -19,7 +19,7 @@ services:
     working_dir: /app
     command: >
       bash -c "apt-get update -qq &&
-      apt-get install -y -qq --no-install-recommends libpq-dev &&
+      apt-get install -y -qq --no-install-recommends libpq5=13.16-0+deb11u1 libpq-dev=13.16-0+deb11u1 &&
       gem install bundler -v 2.3.14 &&
       bundle install &&
       rm -f tmp/pids/server.pid &&
