@@ -15,6 +15,7 @@ class EventsController < ApplicationController
     end_date = start_date.end_of_month
 
     @events = Event.where(start_time: start_date..end_date).order(:start_time)
+    @upcoming_events = Event.where(start_time: Time.current..).order(:start_time)
   end
 
   # Show a single event
@@ -80,7 +81,8 @@ class EventsController < ApplicationController
 
   # Strong parameters to prevent mass assignment issues
   def event_params
-    params.require(:event).permit(:name, :passcode, :start_time, :end_time, :location, :description, :flyer_image)
+    params.require(:event).permit(:name, :passcode, :start_time, :end_time, :location, :description, :flyer_image,
+                                   :committee, :points)
   end
 
   # When a calendar day's "+" quick-add link is clicked, prefill the new event's start time
@@ -156,6 +158,7 @@ class EventsController < ApplicationController
     start_date = event.start_time.to_date.beginning_of_month
     end_date = start_date.end_of_month
     @events = Event.where(start_time: start_date..end_date).order(:start_time)
+    @upcoming_events = Event.where(start_time: Time.current..).order(:start_time)
     render :create
   end
 end

@@ -19,7 +19,7 @@
   <% if events.any? %>
     <div class="day-cell__events">
       <% events.first(max_visible_events).each do |event| %>
-        <%= link_to event.name, event_path(event), class: 'event-pill' %>
+        <%= link_to event.name, event_path(event), class: "event-pill event-pill--#{event.committee}" %>
       <% end %>
 
       <% if events.size > max_visible_events %>
@@ -32,7 +32,7 @@
         <template id="day-events-<%= date.iso8601 %>">
           <ul class="day-events-list">
             <% events.drop(max_visible_events).each do |event| %>
-              <li><%= link_to event.name, event_path(event), class: 'event-pill event-pill--block' %></li>
+              <li><%= link_to event.name, event_path(event), class: "event-pill event-pill--block event-pill--#{event.committee}" %></li>
             <% end %>
           </ul>
         </template>

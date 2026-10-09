@@ -11,5 +11,5 @@
 <% end %>
 
 <%= turbo_stream.update "event_list" do %>
-  <%= render 'events/event_list', events: @events %>
+  <%= render 'events/event_list', events: @upcoming_events %>
 <% end %>

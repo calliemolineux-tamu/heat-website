@@ -79,8 +79,8 @@ class AttendancesController < ApplicationController
     attendance.save
   end
 
-  # Updates the current user's points by incrementing by one.
+  # Credits the current user with the event's point value.
   def update_user_points
-    current_user.update(points: current_user.points.to_i + 1)
+    current_user.update(points: current_user.points.to_i + @event.points.to_i)
   end
 end

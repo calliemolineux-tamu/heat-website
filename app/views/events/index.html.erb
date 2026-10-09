@@ -11,11 +11,20 @@
       <%= render 'events/month_calendar_panel', events: @events %>
     </div>
 
-    <div class="event__container" id="event_container" data-event-tile-height-target="tile">
+    <div class="event__container" id="event_container" data-controller="committee-filter" data-event-tile-height-target="tile">
       <h2 class="event__container-title">Upcoming Events</h2>
 
+      <div class="event__committee-filter">
+        <button type="button" class="event__committee-filter-tab is-active" data-committee="all"
+                data-action="click->committee-filter#filter" data-committee-filter-target="tab">All</button>
+        <% Event.committees.each_key do |committee| %>
+          <button type="button" class="event__committee-filter-tab" data-committee="<%= committee %>"
+                  data-action="click->committee-filter#filter" data-committee-filter-target="tab"><%= committee.humanize %></button>
+        <% end %>
+      </div>
+
       <div id="event_list">
-        <%= render 'events/event_list', events: @events %>
+        <%= render 'events/event_list', events: @upcoming_events %>
       </div>
     </div>
   </div>
