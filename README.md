@@ -74,11 +74,14 @@
 		DATABASE_PASSWORD=<INSERT HERE>
 		DATABASE_USER=<INSERT HERE>
 		
-		# AWS Photo Hosting credentials
-		AWS_ACCESS_KEY_ID=<INSERT HERE>
-		AWS_SECRET_ACCESS_KEY=<INSERT HERE>
-		AWS_REGION=<INSERT HERE>
-		AWS_BUCKET=<INSERT HERE>
+		# Cloudflare R2 photo hosting (S3-compatible).
+		# Leave R2_BUCKET blank for local development - uploads then go to
+		# public/uploads/ on disk instead of R2.
+		R2_ACCESS_KEY_ID=<INSERT HERE>
+		R2_SECRET_ACCESS_KEY=<INSERT HERE>
+		R2_BUCKET=<R2 bucket name>
+		R2_ENDPOINT=https://<CLOUDFLARE_ACCOUNT_ID>.r2.cloudflarestorage.com
+		R2_PUBLIC_URL=https://<public r2.dev URL or custom domain>
 	  ```
 
 ### How to Contribute

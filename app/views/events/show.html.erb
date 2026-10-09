@@ -82,6 +82,10 @@
   <% if current_user.present? %>
     <section class="attendance-list">
       <h2>Attendance List</h2>
+      <% if @role == 'admin' %>
+        <%= link_to 'Export sign-ins (CSV)', export_event_attendances_path(@event, format: :csv),
+                     class: 'btn btn--secondary', data: { turbo: false } %>
+      <% end %>
       <table class="table table-bordered">
         <thead>
           <tr>

@@ -8,7 +8,7 @@ class PhotosController < ApplicationController
 
   # GET /photos
   def index
-    @photos = Photo.order(id: :desc)
+    @photos = Photo.order(id: :desc).includes(:photo_tags)
   end
 
   # GET /photos/1
@@ -33,11 +33,12 @@ class PhotosController < ApplicationController
 
   # POST /photos
   def create
-    handle_blank_photo and return if params[:photo].blank?
+    handle_blank_photo and return if photo_params_blank?
 
     @photo = current_user.photos.build(photo_params)
 
     if @photo.save
+      @photo.sync_tags(tag_names_param)
       handle_create_success
     else
       handle_create_failure
@@ -47,6 +48,7 @@ class PhotosController < ApplicationController
   # PATCH/PUT /photos/1
   def update
     if @photo.update(photo_params)
+      @photo.sync_tags(tag_names_param)
       handle_update_success
     else
       handle_update_failure
@@ -78,6 +80,19 @@ class PhotosController < ApplicationController
   # Only allow a list of trusted parameters through.
   def photo_params
     params.require(:photo).permit(:title, :description, :image)
+  end
+
+  # Home-page carousel tag keys the form submitted (checkbox values), filtered to
+  # the known set. Read separately from photo_params since it isn't a column.
+  def tag_names_param
+    Array(params.dig(:photo, :tag_names)).map(&:to_s) & PhotoTag.tags.keys
+  end
+
+  # The photo form always posts a hidden tag_names field, so params[:photo] is
+  # never truly blank - check the real content fields instead.
+  def photo_params_blank?
+    photo = params[:photo]
+    photo.blank? || photo.except(:tag_names).values.all?(&:blank?)
   end
 
   # Handle the scenario when params[:photo] is blank.

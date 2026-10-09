@@ -1,9 +1,20 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 # The User class represents users of the application.
 # Users can have different roles (admin, member, user) and can have associated photos, attendances, and ideas.
 class User < ApplicationRecord
   ROLES = %w[admin member user].freeze
+
+  # Point-totals export for the admins' master spreadsheet. Rows come out in
+  # whatever order `users` is already in.
+  def self.to_csv(users = all)
+    CSV.generate do |csv|
+      csv << ['Full Name', 'Email', 'Committee', 'Role', 'Points', 'Dues']
+      users.each { |user| csv << [user.full_name, user.email, user.committee, user.role, user.points.to_i, user.dues] }
+    end
+  end
 
   validates :role, inclusion: { in: ROLES }
   validates :full_name, presence: true
