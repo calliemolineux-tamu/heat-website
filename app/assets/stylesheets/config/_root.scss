@@ -10,6 +10,7 @@ body {
     background-attachment: fixed; /* This keeps the background fixed */
     z-index: 0;
     overflow: auto;
+    overflow-x: hidden; /* Guard against sideways page scroll on phones */
 }
   
 body::before {
