@@ -3,6 +3,7 @@
 # Handles attendance-related actions such as checking in to events.
 class AttendancesController < ApplicationController
   before_action :set_event
+  before_action :authenticate_admin!, only: :export
 
   # Creates an attendance record for the current user if the conditions are met.
   def create
@@ -11,6 +12,14 @@ class AttendancesController < ApplicationController
     else
       redirect_to @event, alert: 'Invalid passcode or the event is not happening today.'
     end
+  end
+
+  # GET /events/:event_id/attendances/export.csv - who signed in to this event.
+  def export
+    attendances = @event.attendances.includes(:user).sort_by { |attendance| attendance.user.full_name.to_s.downcase }
+    send_data Attendance.to_csv(attendances, @event),
+              filename: "#{@event.name.parameterize}-signins-#{@event.start_time.to_date.iso8601}.csv",
+              type: 'text/csv', disposition: 'attachment'
   end
 
   private

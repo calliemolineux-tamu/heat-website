@@ -61,6 +61,50 @@ RSpec.feature 'Home Page Features', type: :feature do
     end
   end
 
+  context 'with the home-page photo wheels' do
+    def in_action_wheel
+      find('.carousel-container', text: 'H.E.A.T. in Action')
+    end
+
+    scenario 'an untagged wheel keeps its hardcoded slides' do
+      visit root_path
+      within('.carousel-container', text: 'H.E.A.T. at Social Events') do
+        expect(page).to have_css("img[src*='carousel3slide1']")
+      end
+    end
+
+    scenario 'a tagged wheel shows the 5 most-recently-tagged photos' do
+      photos = Array.new(6) { create(:photo, user: admin) }
+      photos.each_with_index do |photo, i|
+        travel_to((10 - i).minutes.ago) { photo.sync_tags(%w[in_action]) }
+      end
+      oldest_tagged = photos.first
+      newest_tagged = photos.last
+
+      visit root_path
+
+      within in_action_wheel do
+        expect(page).to have_css('img.carousel-image', count: 5)
+        expect(page).to have_css("img[src='#{newest_tagged.image_url}']")
+        expect(page).not_to have_css("img[src='#{oldest_tagged.image_url}']")
+        # hardcoded fallback slide is gone
+        expect(page).not_to have_css("img[src*='carousel2slide1']")
+      end
+    end
+
+    scenario 'tagging an old photo moves it into the wheel ahead of newer photos' do
+      recent = Array.new(5) { |i| create(:photo, user: admin).tap { |p| travel_to((5 - i).minutes.ago) { p.sync_tags(%w[in_action]) } } }
+      latecomer = create(:photo, user: admin)
+      latecomer.sync_tags(%w[in_action]) # tagged now => newest
+
+      visit root_path
+      within in_action_wheel do
+        expect(page).to have_css("img[src='#{latecomer.image_url}']")
+        expect(page).not_to have_css("img[src='#{recent.first.image_url}']") # oldest-tagged pushed out
+      end
+    end
+  end
+
   # Helper methods
   def expect_login_content_before(user)
     expect(page).to have_content('Login')

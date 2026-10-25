@@ -120,6 +120,16 @@ RSpec.describe PhotosController, type: :controller do
         post :create, params: { photo: valid_attributes, format: :turbo_stream }
         expect(response.media_type).to eq(Mime[:turbo_stream])
       end
+
+      it 'applies checked home-page tags' do
+        post :create, params: { photo: valid_attributes.merge(tag_names: ['', 'in_action', 'social_events']) }
+        expect(Photo.last.photo_tags.map(&:tag)).to contain_exactly('in_action', 'social_events')
+      end
+
+      it 'creates no tags when none are checked' do
+        post :create, params: { photo: valid_attributes.merge(tag_names: ['']) }
+        expect(Photo.last.photo_tags).to be_empty
+      end
     end
 
     context 'with invalid attributes' do
@@ -162,6 +172,23 @@ RSpec.describe PhotosController, type: :controller do
 
       it 'sets a notice message' do
         expect(flash[:notice]).to eq('Photo was successfully updated.')
+      end
+    end
+
+    context 'when toggling home-page tags' do
+      before { photo.sync_tags(%w[in_action]) }
+
+      it 'adds newly checked tags and drops unchecked ones' do
+        patch :update, params: { id: photo.id, photo: { tag_names: ['', 'social_events'] } }
+        expect(photo.photo_tags.reload.map(&:tag)).to contain_exactly('social_events')
+      end
+
+      it 'leaves an unchanged tag row (and its recency) alone' do
+        original = photo.photo_tags.find_by(tag: :in_action).created_at
+        travel_to(1.hour.from_now) do
+          patch :update, params: { id: photo.id, photo: { title: 'New', tag_names: ['', 'in_action'] } }
+        end
+        expect(photo.photo_tags.reload.find_by(tag: :in_action).created_at).to eq(original)
       end
     end
 
