@@ -10,6 +10,10 @@ a {
 .merchtitle{
     margin-bottom: 10px;
     font-size: 55px;
+
+    @include media(mobile) {
+        font-size: var(--font-size-xxxl);
+    }
 }
 
 .merch-list{
@@ -17,6 +21,15 @@ a {
     grid-template-columns: repeat(3, 1fr);
     column-gap: 1em;
     row-gap: 20px;
+    width: 100%;
+
+    @include media(mobile) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media(phone) {
+        grid-template-columns: 1fr;
+    }
 }
 
 form {
@@ -59,12 +72,22 @@ form {
     font-size: 55px;
     color: black;
     margin: 0;
+
+    @include media(mobile) {
+      font-size: var(--font-size-xxxl);
+    }
   }
-  
+
   .header-button {
     position: absolute;
     right: 0;
     margin-right: 20px;
+
+    // Absolute positioning overlaps the title on narrow screens
+    @include media(mobile) {
+      position: static;
+      margin-right: 0;
+    }
   }
   
   .button-link {
@@ -99,6 +122,10 @@ form {
     max-width: 400px;
     width: 80%;
     text-align: center;
+
+    @include media(phone) {
+      width: calc(100% - 2rem);
+    }
   }
   
   .hidden {

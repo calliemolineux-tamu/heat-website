@@ -5,4 +5,11 @@
   @else if $query == mobile {
     @media (max-width: 70rem) { @content; }
   }
+  @else if $query == phone {
+    @media (max-width: 40rem) { @content; }
+  }
+  // Devices without hover (phones/tablets): hover-only UI must be visible here.
+  @else if $query == touch {
+    @media (hover: none) { @content; }
+  }
 }

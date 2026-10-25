@@ -38,6 +38,12 @@
     padding: 0.5rem;
     border: none;
     cursor: pointer;
+    z-index: 1; // stay tappable above the touch caption strip
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .carousel-button-left {
@@ -99,5 +105,38 @@
   
   .carousel-container:hover .carousel-content > * {
     transform: translateY(0px);
+  }
+
+  @include media(mobile) {
+    .carousel-content h1 {
+      font-size: var(--font-size-xl);
+      margin-bottom: 4px;
+    }
+
+    .carousel-content p {
+      font-size: var(--font-size-s);
+    }
+  }
+
+  // No hover on touchscreens: show the title/description as a caption strip
+  // along the bottom of the image instead of an overlay that never appears.
+  @include media(touch) {
+    .carousel-content {
+      opacity: 1;
+      top: auto;
+      bottom: 0;
+      height: auto;
+      padding: var(--space-l) var(--space-m) var(--space-s);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+      pointer-events: none;
+    }
+
+    .carousel-content > * {
+      transform: none;
+    }
+
+    .carousel-content p {
+      padding: 0;
+    }
   }
   

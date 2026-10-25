@@ -3,10 +3,11 @@
   <div class="table-row">
     <div class="table-cell user-cell"><%= image_tag user.avatar_url, class: 'table-image' %></div>
     <div class="table-cell user-cell"><%= user.full_name %></div>
-    <div class="table-cell user-cell"><%= user.committee %></div>
-    <div class="table-cell user-cell"><%= user.dues %></div>
-    <div class="table-cell user-cell"><%= user.points %></div>
-    <div class="table-cell user-cell role-<%= user.role %>"><%= user.role %></div>
+    <%# data-label is shown as a field label when rows stack into cards on phones (_table.scss) %>
+    <div class="table-cell user-cell" data-label="Committee"><%= user.committee %></div>
+    <div class="table-cell user-cell" data-label="Dues"><%= user.dues %></div>
+    <div class="table-cell user-cell" data-label="Points"><%= user.points %></div>
+    <div class="table-cell user-cell role-<%= user.role %>" data-label="Role"><%= user.role %></div>
     <div class="table-cell user-cell actions">
       <%= link_to edit_user_path(user), class: 'table-button edit', data: { turbo_frame: "user_#{user.id}" } do %>
         <%= image_tag 'pencil-svgrepo-com.svg', class: 'user__table-svg', alt: 'Edit User', width: '20', height: '40' %>
