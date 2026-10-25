@@ -10,9 +10,9 @@
     <% photos_in_columns.each do |column_photos| %>
         <div class="gallery__column">
         <% column_photos.each do |photo| %>
-            <div class="gallery__item">
+            <%= turbo_frame_tag dom_id(photo) do %>
                 <%= render partial: 'photo', locals: { photo: photo } %>
-            </div>
+            <% end %>
         <% end %>
         </div>
     <% end %>

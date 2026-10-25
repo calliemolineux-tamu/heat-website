@@ -1,9 +1,11 @@
-<%# The list of event cards for the current month, factored out so it can be
-    fully re-rendered via Turbo Stream after an inline create. %>
-<% if events.any? %>
-  <% events.each do |event| %>
+<%# The list of upcoming event cards for the current month, factored out so it can be
+    fully re-rendered via Turbo Stream after an inline create. Only events that haven't
+    started yet are shown here; the calendar grid still gets the full month's events. %>
+<% upcoming_events = events.select { |event| event.start_time > Time.current } %>
+<% if upcoming_events.any? %>
+  <% upcoming_events.each do |event| %>
     <%= render 'events/event_card', event: event %>
   <% end %>
 <% else %>
-  <p class="event__empty">No events scheduled this month.</p>
+  <p class="event__empty">No upcoming events scheduled this month.</p>
 <% end %>

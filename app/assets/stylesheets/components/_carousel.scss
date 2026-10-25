@@ -18,8 +18,13 @@
   }
   
   .carousel-image {
+    display: block;
     width: 100%;
-    height: auto;
+    /* Slides come from arbitrary user-uploaded photos now (portrait and
+       landscape), so every slide is normalised to the same banner shape
+       instead of letting a tall portrait blow the wheel up. */
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
     margin: 0 auto;
     border-radius: var(--border-radius);
   }
