@@ -69,4 +69,6 @@ RSpec.configure do |config|
   # added for login_as(user, scope: :user) in rspec
   config.include Warden::Test::Helpers
   config.include FactoryBot::Syntax::Methods
+  # travel_to / freeze_time for time-dependent ordering specs
+  config.include ActiveSupport::Testing::TimeHelpers
 end

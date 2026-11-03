@@ -95,6 +95,16 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_06_000001) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "photo_tags", force: :cascade do |t|
+    t.bigint "photo_id", null: false
+    t.integer "tag", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["photo_id", "tag"], name: "index_photo_tags_on_photo_id_and_tag", unique: true
+    t.index ["photo_id"], name: "index_photo_tags_on_photo_id"
+    t.index ["tag", "created_at"], name: "index_photo_tags_on_tag_and_created_at"
+  end
+
   create_table "photos", force: :cascade do |t|
     t.text "image_data"
     t.string "title"
@@ -121,5 +131,6 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_06_000001) do
 
   add_foreign_key "attendances", "events", on_delete: :cascade
   add_foreign_key "attendances", "users"
+  add_foreign_key "photo_tags", "photos", on_delete: :cascade
   add_foreign_key "photos", "users"
 end
