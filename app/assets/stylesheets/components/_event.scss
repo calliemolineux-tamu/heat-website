@@ -81,28 +81,48 @@
   gap: var(--space-s);
   width: 100%;
 
-  @include media(mobile) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  nav {
+  // "‹ December 2026 ›"
+  &__month {
     display: flex;
-    gap: var(--space-xs);
+    align-items: center;
+    gap: var(--space-xxs);
   }
 
-  nav a {
-    padding: var(--space-xxs) var(--space-s);
+  &__arrow,
+  &__today {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.25rem;
     border-radius: var(--border-radius);
     border: 1px solid var(--color-light);
     color: var(--color-text-body);
-    font-size: var(--font-size-s);
     transition: background-color 0.2s ease, color 0.2s ease;
 
     &:hover {
       background-color: var(--color-glint);
       color: var(--color-secondary);
     }
+
+    @include media(touch) {
+      min-height: 44px;
+    }
+  }
+
+  &__arrow {
+    min-width: 2.25rem;
+    font-size: var(--font-size-xl);
+    line-height: 1;
+
+    @include media(touch) {
+      min-width: 44px;
+    }
+  }
+
+  &__today {
+    padding: 0 var(--space-m);
+    font-size: var(--font-size-s);
+    font-weight: 600;
   }
 }
 
@@ -122,6 +142,7 @@
   border-radius: var(--border-radius);
   border: 1px solid var(--color-light);
   vertical-align: top;
+  position: relative; // anchors the admin quick-add link (.day-cell__add) to the whole tile
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 
   @include media(mobile) {
@@ -138,11 +159,9 @@
     box-shadow: var(--shadow-small);
   }
 
-  // Reveal the quick-add "+" on hover over the whole tile, not just the
-  // .day-cell content box (which can be shorter than the tile on days with
-  // few/no events, since it only grows to fit its own content).
-  &:hover .day-cell__add {
-    opacity: 1;
+  // Admins: the whole tile is the quick-add target, so hint that on hover
+  &:has(.day-cell__add):hover:not(.today) {
+    background-color: var(--color-background);
   }
 
   &.today {
@@ -176,29 +195,16 @@
     color: var(--color-text-header);
   }
 
+  // Admin quick-add: an invisible link stretched over the whole day tile
+  // (positioned against td.day). Event pills and "+N more" are raised above
+  // it, so clicking a pill opens that event and clicking anywhere else on
+  // the tile opens the "New Event" modal for this date.
   &__add {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.25rem;
-    height: 1.25rem;
-    line-height: 1;
-    border-radius: 50%;
-    background-color: var(--color-secondary);
-    color: var(--color-white);
-    font-size: var(--font-size-s);
-    font-weight: bold;
-    opacity: 0;
-    transition: opacity 0.15s ease, background-color 0.2s ease;
-
-    &:hover {
-      background-color: var(--color-secondary-rotate);
-    }
-
-    // No hover to reveal it on touchscreens
-    @include media(touch) {
-      opacity: 1;
-    }
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: var(--border-radius);
+    cursor: pointer;
   }
 
   &__events {
@@ -206,9 +212,18 @@
     flex-direction: column;
     gap: 3px;
     overflow: hidden;
+    // Let clicks in the gaps between pills fall through to the quick-add link
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+
+    > * {
+      pointer-events: auto;
+    }
   }
 
   &__more {
+    position: relative;
     align-self: flex-start;
     background: none;
     border: none;
@@ -250,7 +265,7 @@
   // pills shrink to colored bars (still tappable links). Full names are in
   // the Upcoming Events list above the calendar and the "+N more" modal.
   @include media(phone) {
-    height: 6px;
+    height: 10px; // tall enough to tap; the rest of the tile adds an event (admins)
     padding: 0;
     font-size: 0;
   }
@@ -416,6 +431,13 @@
     font-size: var(--font-size-xs);
     font-weight: 700;
     line-height: 1.3;
+
+    // Pinned to the corner it overlaps longer titles on narrow cards, so it
+    // sits in the normal flow (its own line above the title) on mobile
+    @include media(mobile) {
+      position: static;
+      align-self: flex-start;
+    }
 
     &--animal        { background-color: var(--color-committee-animal); }
     &--environmental { background-color: var(--color-committee-environmental); }

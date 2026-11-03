@@ -1,12 +1,15 @@
 <div class="simple-calendar">
   <div class="calendar-heading">
-    <time datetime="<%= start_date.strftime('%Y-%m') %>" class="calendar-title"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></time>
-
-    <nav>
-      <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view %>
-      <%= link_to t('simple_calendar.today', default: 'Today'), calendar.url_for_today_view %>
-      <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view %>
+    <%# Month arrows flank the title ("‹ December 2026 ›"); Today sits on the right %>
+    <nav class="calendar-heading__month" aria-label="Change month">
+      <%= link_to '‹', calendar.url_for_previous_view, class: 'calendar-heading__arrow',
+                  aria: { label: t('simple_calendar.previous', default: 'Previous month') } %>
+      <time datetime="<%= start_date.strftime('%Y-%m') %>" class="calendar-title"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></time>
+      <%= link_to '›', calendar.url_for_next_view, class: 'calendar-heading__arrow',
+                  aria: { label: t('simple_calendar.next', default: 'Next month') } %>
     </nav>
+
+    <%= link_to t('simple_calendar.today', default: 'Today'), calendar.url_for_today_view, class: 'calendar-heading__today' %>
   </div>
 
   <table>

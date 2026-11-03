@@ -2,18 +2,21 @@
     simple_calendar's own today/past/future/prev-month/next-month/has-events classes -
     see components/_event.scss). Shows the day number, up to MAX_VISIBLE_EVENTS event
     chips, a "+N more" that opens a shared day-detail modal for busier days, and
-    (admins only) a quick-add control that opens the "New Event" modal prefilled to
-    this date. %>
+    (admins only) an invisible quick-add link covering the whole tile that opens the
+    "New Event" modal prefilled to this date. Event chips and "+N more" sit above it,
+    so clicking a chip opens that event and clicking anywhere else adds one. %>
 <% max_visible_events = 3 %>
 <div class="day-cell">
+  <% if @role == 'admin' %>
+    <%= link_to new_event_path(start_date: date.iso8601),
+                 class: 'day-cell__add',
+                 data: { turbo_frame: dom_id(Event.new), action: 'click->modal#open' },
+                 title: 'Add event' do %>
+      <span class="visually-hidden">Add event on <%= date.strftime('%B %-d, %Y') %></span>
+    <% end %>
+  <% end %>
   <div class="day-cell__header">
     <span class="day-cell__number"><%= date.day %></span>
-    <% if @role == 'admin' %>
-      <%= link_to '+', new_event_path(start_date: date.iso8601),
-                   class: 'day-cell__add',
-                   data: { turbo_frame: dom_id(Event.new), action: 'click->modal#open' },
-                   title: 'Add event' %>
-    <% end %>
   </div>
 
   <% if events.any? %>
