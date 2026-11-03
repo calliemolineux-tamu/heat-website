@@ -17,8 +17,14 @@
         @include media(mobile) {
             width: 100%;
         }
+
+        // .container already pads the page edges on phones
+        @include media(phone) {
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
-    
+
 
     @include media(mobile) {
         width: 100%;
@@ -98,6 +104,33 @@
         transform: translateY(0px);
     }
 
+    @include media(mobile) {
+        &__image-content h1 {
+            font-size: var(--font-size-xl);
+            margin-bottom: 4px;
+        }
+
+        &__image-content p {
+            font-size: var(--font-size-s);
+        }
+    }
+
+    // No hover on touchscreens: show the caption as a strip along the bottom
+    @include media(touch) {
+        &__image-content {
+            opacity: 1;
+            top: auto;
+            bottom: 0;
+            height: auto;
+            padding: var(--space-l) 0 var(--space-s);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+        }
+
+        &__image-content > * {
+            transform: none;
+        }
+    }
+
     &__caption {
         text-align: center;
         color: var(--color-tertiary);
@@ -160,6 +193,10 @@
 
         @include media(mobile) {
             width: 100%;
+        }
+
+        @include media(phone) {
+            padding: var(--space-s);
         }
     }
 

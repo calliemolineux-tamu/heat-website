@@ -10,6 +10,21 @@ export default class extends Controller {
 
   connect() {
     this.showCurrentSlide()
+
+    // Swipe left/right on touchscreens
+    this.onTouchStart = (event) => { this.touchStartX = event.changedTouches[0].clientX }
+    this.onTouchEnd = (event) => {
+      const deltaX = event.changedTouches[0].clientX - this.touchStartX
+      if (Math.abs(deltaX) < 40) return
+      deltaX < 0 ? this.next() : this.previous()
+    }
+    this.element.addEventListener("touchstart", this.onTouchStart, { passive: true })
+    this.element.addEventListener("touchend", this.onTouchEnd, { passive: true })
+  }
+
+  disconnect() {
+    this.element.removeEventListener("touchstart", this.onTouchStart)
+    this.element.removeEventListener("touchend", this.onTouchEnd)
   }
 
   next() {

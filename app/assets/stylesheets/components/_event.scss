@@ -129,6 +129,11 @@
     padding: var(--space-xxs);
   }
 
+  @include media(phone) {
+    min-height: 3.5rem;
+    padding: var(--space-xxxs);
+  }
+
   &:hover {
     box-shadow: var(--shadow-small);
   }
@@ -189,6 +194,11 @@
     &:hover {
       background-color: var(--color-secondary-rotate);
     }
+
+    // No hover to reveal it on touchscreens
+    @include media(touch) {
+      opacity: 1;
+    }
   }
 
   &__events {
@@ -236,10 +246,25 @@
     color: var(--color-glint);
   }
 
+  // Day cells are too narrow on phones for any readable text, so calendar
+  // pills shrink to colored bars (still tappable links). Full names are in
+  // the Upcoming Events list above the calendar and the "+N more" modal.
+  @include media(phone) {
+    height: 6px;
+    padding: 0;
+    font-size: 0;
+  }
+
   &--block {
     padding: var(--space-xs) var(--space-s);
     font-size: var(--font-size-s);
     white-space: normal;
+
+    @include media(phone) {
+      height: auto;
+      padding: var(--space-xs) var(--space-s);
+      font-size: var(--font-size-s);
+    }
   }
 
   &--animal,
@@ -350,6 +375,9 @@
     @include media(mobile) {
       width: 100%;
       height: 28rem;
+      // The list is more useful than a cramped calendar on a phone, so it
+      // comes first once .events stacks into a column.
+      order: -1;
     }
   }
 
@@ -428,6 +456,11 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
+
+  @include media(touch) {
+    padding: var(--space-xs) var(--space-s);
+    font-size: var(--font-size-s);
+  }
 
   &:hover {
     background-color: var(--color-glint);

@@ -13,7 +13,8 @@
           <!-- %= link_to @auth_link[:name], @auth_link[:path], method: @auth_link[:method] % -->
           <%= button_to @auth_link[:name], @auth_link[:path], method: @auth_link[:method], data: {turbo: "false"}, class: 'btn btn--tertiary navbar__profile' %>
       </div>
-      <button class="navbar__toggle" data-action="navbar#toggle">
+      <button type="button" class="navbar__toggle" data-action="navbar#toggle" data-navbar-target="toggle"
+              aria-label="Menu" aria-expanded="false">
         ☰
       </button>
     </nav>

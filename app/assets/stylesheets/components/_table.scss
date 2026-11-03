@@ -219,3 +219,65 @@
         padding: 0;
     }
 }
+
+// Phones: each member row wraps into a card instead of scrolling sideways.
+// Line 1: avatar + name. Line 2: labeled fields. Line 3: actions.
+// Same specificity as the fixed-width nth-child rules above; later source wins.
+@include media(phone) {
+    .table .table-row {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        overflow: visible;
+        padding: var(--space-xs) 0;
+    }
+
+    .table .table-row .user-cell {
+        flex: 1 1 40%;
+        padding: 6px 10px;
+    }
+
+    .table .table-row .user-cell:nth-child(1) {
+        flex: 0 0 auto;
+    }
+
+    .table .table-row .user-cell:nth-child(2) {
+        flex: 1 1 60%;
+        font-weight: bold;
+    }
+
+    .table .table-row .user-cell:last-child {
+        flex: 1 1 100%;
+        justify-content: flex-end;
+        gap: var(--space-s);
+    }
+
+    .table .table-row .user-cell[data-label]::before {
+        content: attr(data-label) ": ";
+        font-weight: bold;
+    }
+
+    // Header row becomes a compact "sort by" bar; avatar/actions headers add nothing
+    .table .table-header .table-row {
+        padding: 0;
+    }
+
+    .table .table-header .table-row .user-cell:nth-child(1),
+    .table .table-header .table-row .user-cell:last-child {
+        display: none;
+    }
+
+    .table .table-header .table-row .user-cell {
+        flex: 1 1 auto;
+        font-size: var(--font-size-s);
+        font-weight: bold;
+    }
+
+    // Bigger tap targets for edit/delete
+    .table .table-button {
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

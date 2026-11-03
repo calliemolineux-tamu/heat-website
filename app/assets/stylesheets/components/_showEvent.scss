@@ -12,6 +12,11 @@
   // including this one. Declared !important here too so this page's own
   // later-imported rule (see application.scss import order) wins instead.
   padding-top: 180px !important;
+
+  // On phones 180px is a big empty gap; just clear the 6rem navbar
+  @include media(mobile) {
+    padding-top: 7.5rem !important;
+  }
 }
 
 /* Event Details Page Styling */
@@ -22,6 +27,11 @@
   padding-top: 180px !important; // see the .container comment above - same collision applies here
   border-radius: 8px;
   margin-top: 20px;
+
+  // Still leaves room for the absolutely positioned back button
+  @include media(mobile) {
+    padding-top: 10.5rem !important;
+  }
 
   // Pinned to the top-left corner of the card, just below the fixed navbar
   // (position: fixed; height: 6rem; z-index: 2000) rather than sitting in
@@ -79,6 +89,10 @@
 
     &:hover {
       transform: translateY(-5px); // Slight lift effect on hover
+
+      @include media(touch) {
+        transform: none; // taps would leave the bubble stuck "lifted"
+      }
     }
 
     h3 {
